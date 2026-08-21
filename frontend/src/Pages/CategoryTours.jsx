@@ -16,7 +16,7 @@ function CategoryTours() {
   const fetchTours = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/tours/category/${decodeURIComponent(
+        `${import.meta.env.VITE_API_URL}/api/tours/category/${decodeURIComponent(
           category
         )}`
       );
@@ -37,7 +37,7 @@ function CategoryTours() {
       }
 
       const res = await axios.post(
-        "http://localhost:5000/api/wishlist/add",
+        "${import.meta.env.VITE_API_URL}/api/wishlist/add",
         {
           userId: user._id,
           tourId: tourId,

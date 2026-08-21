@@ -10,7 +10,7 @@ function ViewTours() {
 
   const fetchTours = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/tours");
+      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/tours");
       setTours(res.data.data);
     } catch (error) {
       console.log(error);

@@ -15,7 +15,7 @@ function MyBookings() {
     try {
       setLoading(true);
 
-      const res = await axios.get("http://localhost:5000/api/bookings");
+      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/bookings");
 
       // safer fallback in case backend structure changes
       setBookings(res.data?.data || res.data || []);
@@ -32,7 +32,7 @@ function MyBookings() {
     if (!bookingId) return;
 
     window.open(
-      `http://localhost:5000/api/ticket/generate/${bookingId}`,
+      `${import.meta.env.VITE_API_URL}/api/ticket/generate/${bookingId}`,
       "_blank"
     );
   };
@@ -55,7 +55,7 @@ function MyBookings() {
 
     try {
       await axios.put(
-        `http://localhost:5000/api/bookings/cancel/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/bookings/cancel/${id}`,
         { reason }
       );
 

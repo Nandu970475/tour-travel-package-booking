@@ -35,7 +35,7 @@ function EditTour() {
   const fetchTours = async () => {
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/tours"
+        "${import.meta.env.VITE_API_URL}/api/tours"
       );
 
       setTours(res.data.data);
@@ -100,7 +100,7 @@ const updatedTour = {
 };
 
 await axios.put(
-  `http://localhost:5000/api/tours/${editingId}`,
+  `${import.meta.env.VITE_API_URL}/api/tours/${editingId}`,
   updatedTour
 );
 

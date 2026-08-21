@@ -12,7 +12,7 @@ function TourCard({ tour }) {
         return;
       }
 
-      await axios.post("http://localhost:5000/api/wishlist/add", {
+      await axios.post("${import.meta.env.VITE_API_URL}/api/wishlist/add", {
         userId: user._id,
         tourId: tour._id,
       });

@@ -16,7 +16,7 @@ function TourDetails() {
   const fetchTour = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/tours/${id}`
+        `${import.meta.env.VITE_API_URL}/api/tours/${id}`
       );
 
       setTour(response.data.data);

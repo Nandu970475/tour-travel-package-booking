@@ -11,7 +11,7 @@ function ViewBookings() {
 
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/bookings");
+      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/bookings");
       setBookings(res.data);
     } catch (err) {
       console.log(err);

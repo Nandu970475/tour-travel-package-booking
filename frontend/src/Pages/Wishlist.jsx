@@ -15,7 +15,7 @@ function Wishlist() {
       const user = JSON.parse(localStorage.getItem("user"));
 
       const res = await axios.get(
-        `http://localhost:5000/api/wishlist/${user._id}`
+        `${import.meta.env.VITE_API_URL}/api/wishlist/${user._id}`
       );
 
       setWishlist(res.data);

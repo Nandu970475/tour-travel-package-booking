@@ -15,7 +15,7 @@ function DeleteTour() {
       setLoading(true);
 
       const response = await axios.get(
-        "http://localhost:5000/api/tours"
+        "${import.meta.env.VITE_API_URL}/api/tours"
       );
 
       setTours(response.data.data);
@@ -37,7 +37,7 @@ function DeleteTour() {
 
     try {
       await axios.delete(
-        `http://localhost:5000/api/tours/${id}`
+        `${import.meta.env.VITE_API_URL}/api/tours/${id}`
       );
 
       alert("Tour Deleted Successfully");

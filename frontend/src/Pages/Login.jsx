@@ -90,8 +90,7 @@ function Login() {
 
 
       const response = await axios.post(
-
-        "http://localhost:5000/api/users/send-otp",
+  `${import.meta.env.VITE_API_URL}/api/users/send-otp`,
 
         {
           email: email.trim(),
@@ -179,7 +178,7 @@ function Login() {
 
       const response = await axios.post(
 
-        "http://localhost:5000/api/users/verify-otp",
+        "${import.meta.env.VITE_API_URL}/api/users/verify-otp",
 
         {
           email: email.trim(),

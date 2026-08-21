@@ -17,7 +17,7 @@ function Home() {
  const fetchTours = async (searchValue = "") => {
   try {
     const response = await axios.get(
-      `http://localhost:5000/api/tours?search=${searchValue}`
+      `${import.meta.env.VITE_API_URL}/api/tours?search=${searchValue}`
     );
 
     setTours(response.data.data);
@@ -60,7 +60,7 @@ const addToWishlist = async (tourId) => {
     }
 
     const res = await axios.post(
-      "http://localhost:5000/api/wishlist/add",
+      "${import.meta.env.VITE_API_URL}/api/wishlist/add",
       {
         userId: user._id,
         tourId: tourId,
