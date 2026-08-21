@@ -1,9 +1,13 @@
+const UserRoutes = require("./routes/UserRoutes");
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/database");
 const tourRoutes = require("./routes/tourRoutes");
+<<<<<<< HEAD
 const UserRoutes = require("./routes/UserRoutes");
+=======
+>>>>>>> eff7783d47b1abfb156b24a8cf78efa9d12ea16d
 const wishlistRoutes = require("./routes/wishlistRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const ticketRoutes = require("./routes/ticketRoutes");
