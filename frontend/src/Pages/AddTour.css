@@ -1,0 +1,65 @@
+.addtour-container {
+  min-height: 100vh;
+  background: #a06b10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.addtour-form {
+  width: 100%;
+  max-width: 700px;
+  background: rgb(255, 255, 255);
+  padding: 35px;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+}
+
+.addtour-form h2 {
+  text-align: center;
+  color: #121316;
+  margin-bottom: 25px;
+}
+
+.addtour-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.addtour-form input,
+.addtour-form select,
+.addtour-form te
+xtarea {
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.addtour-form input:focus,
+.addtour-form select:focus,
+.addtour-form textarea:focus {
+  border-color: #0d6efd;
+}
+
+.addtour-form textarea {
+  resize: vertical;
+}
+
+.addtour-form button {
+  background: #0d6efd;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.addtour-form button:hover {
+  background: #084fc7;
+}

@@ -1,0 +1,38 @@
+.bookings-container {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 40px;
+}
+
+.bookings-container h1 {
+  text-align: center;
+  color: #1e3a8a;
+  margin-bottom: 30px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.booking-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.booking-table th {
+  background: #2563eb;
+  color: white;
+  padding: 12px;
+}
+
+.booking-table td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.booking-table tr:hover {
+  background: #f3f4f6;
+}

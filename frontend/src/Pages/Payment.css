@@ -1,0 +1,558 @@
+/* =====================================================
+   PAYMENT PAGE - NEW DESIGN
+===================================================== */
+
+.payment-page {
+  min-height: 100vh;
+  width: 100%;
+
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #081b3a 0%,
+      #102a56 35%,
+      #1e3a8a 70%,
+      #0f172a 100%
+    );
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =====================================================
+   BACKGROUND DECORATION
+===================================================== */
+
+.payment-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  background: rgba(59, 130, 246, 0.18);
+
+  filter: blur(80px);
+
+  top: -200px;
+  left: -150px;
+}
+
+
+.payment-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 450px;
+  height: 450px;
+
+  border-radius: 50%;
+
+  background: rgba(168, 85, 247, 0.15);
+
+  filter: blur(80px);
+
+  bottom: -200px;
+  right: -150px;
+}
+
+
+/* =====================================================
+   PLANES
+===================================================== */
+
+.sky {
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  pointer-events: none;
+
+  overflow: hidden;
+
+  z-index: 1;
+}
+
+
+.plane {
+  position: absolute;
+
+  font-size: 30px;
+
+  opacity: 0.6;
+
+  animation: paymentPlane 12s linear infinite;
+}
+
+
+.plane:nth-child(1) {
+  top: 20%;
+  left: -80px;
+}
+
+
+.plane:nth-child(2) {
+  top: 50%;
+  left: -120px;
+
+  animation-delay: 4s;
+}
+
+
+.plane:nth-child(3) {
+  top: 75%;
+  left: -100px;
+
+  animation-delay: 8s;
+}
+
+
+@keyframes paymentPlane {
+
+  0% {
+    transform:
+      translateX(0)
+      rotate(10deg);
+
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 0.7;
+  }
+
+  80% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform:
+      translateX(120vw)
+      rotate(10deg);
+
+    opacity: 0;
+  }
+}
+
+
+/* =====================================================
+   PAYMENT CARD
+===================================================== */
+
+.payment-container {
+  position: relative;
+
+  z-index: 5;
+
+  width: 420px;
+
+  max-width: 95vw;
+
+  padding: 32px;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  color: #172554;
+
+  text-align: center;
+
+  box-shadow:
+    0 25px 70px
+    rgba(0, 0, 0, 0.35);
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.8);
+}
+
+
+/* =====================================================
+   HEADING
+===================================================== */
+
+.payment-container h1 {
+  margin: 0 0 25px;
+
+  font-size: 24px;
+
+  color: #172554;
+
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   PAYMENT BUTTONS
+===================================================== */
+
+.payment-container > button:not(.pay-btn) {
+
+  width: 100%;
+
+  height: 48px;
+
+  margin: 7px 0;
+
+  border: none;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  color: white;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #7c3aed
+    );
+
+  box-shadow:
+    0 6px 15px
+    rgba(37, 99, 235, 0.22);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.payment-container > button:not(.pay-btn):hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 22px
+    rgba(37, 99, 235, 0.35);
+}
+
+
+/* =====================================================
+   ACTIVE BUTTON
+===================================================== */
+
+.payment-container > button.active {
+
+  background:
+    linear-gradient(
+      90deg,
+      #059669,
+      #10b981
+    );
+
+  box-shadow:
+    0 8px 20px
+    rgba(16, 185, 129, 0.35);
+
+  transform: translateY(-2px);
+}
+
+
+/* =====================================================
+   BOOKING SUMMARY
+===================================================== */
+
+.booking-summary {
+
+  margin-top: 22px;
+
+  padding: 20px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #f5f3ff
+    );
+
+  border: 1px solid #dbeafe;
+
+  text-align: left;
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(255,255,255,0.8);
+}
+
+
+/* =====================================================
+   SUMMARY TITLE
+===================================================== */
+
+.booking-summary h2 {
+
+  margin: 0 0 18px;
+
+  text-align: center;
+
+  color: #4f46e5;
+
+  font-size: 21px;
+
+  font-weight: 800;
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.booking-summary p {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 10px;
+
+  margin: 9px 0;
+
+  font-size: 13px;
+
+  color: #475569;
+}
+
+
+.booking-summary p strong {
+
+  color: #172554;
+
+  font-weight: 700;
+}
+
+
+/* =====================================================
+   DIVIDER
+===================================================== */
+
+.booking-summary hr {
+
+  border: none;
+
+  border-top:
+    1px solid #cbd5e1;
+
+  margin: 16px 0;
+}
+
+
+/* =====================================================
+   PRICE
+===================================================== */
+
+.booking-summary h3 {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  margin: 10px 0;
+
+  color: #334155;
+
+  font-size: 14px;
+}
+
+
+/* =====================================================
+   GRAND TOTAL
+===================================================== */
+
+.booking-summary h2[style] {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 16px;
+
+  padding-top: 15px;
+
+  border-top:
+    2px dashed #cbd5e1;
+
+  color: #059669 !important;
+
+  font-size: 20px;
+}
+
+
+/* =====================================================
+   CONTINUE BUTTON
+===================================================== */
+
+.payment-container .pay-btn {
+
+  width: 100%;
+
+  height: 48px;
+
+  margin-top: 18px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 800;
+
+  background:
+    linear-gradient(
+      90deg,
+      #f97316,
+      #ef4444
+    ) !important;
+
+  box-shadow:
+    0 8px 20px
+    rgba(249, 115, 22, 0.30);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+
+.payment-container .pay-btn:hover {
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px
+    rgba(249, 115, 22, 0.40);
+}
+
+
+/* =====================================================
+   SECURE PAYMENT
+===================================================== */
+
+.secure-text {
+
+  margin: 18px 0 0;
+
+  color: #059669;
+
+  font-size: 12px;
+
+  font-weight: 800;
+
+  text-align: center;
+}
+
+
+/* =====================================================
+   RUNWAY
+===================================================== */
+
+.runway {
+
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+
+  height: 70px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #0f172a 0px,
+      #0f172a 30px,
+      #1e293b 30px,
+      #1e293b 60px
+    );
+
+  opacity: 0.7;
+
+  z-index: 2;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+  .payment-page {
+
+    align-items: flex-start;
+
+    padding-top: 25px;
+
+    padding-bottom: 100px;
+  }
+
+
+  .payment-container {
+
+    width: 95%;
+
+    padding: 22px;
+
+    border-radius: 20px;
+  }
+
+
+  .payment-container h1 {
+
+    font-size: 20px;
+  }
+
+
+  .booking-summary {
+
+    padding: 16px;
+  }
+
+
+  .booking-summary p {
+
+    font-size: 12px;
+  }
+
+
+  .booking-summary h3 {
+
+    font-size: 13px;
+  }
+
+
+  .plane {
+
+    font-size: 20px;
+  }
+
+}

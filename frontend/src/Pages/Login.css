@@ -1,0 +1,282 @@
+/* ============================= */
+/* FULL PAGE */
+/* ============================= */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+.login-container {
+  width: 100%;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #0f172a,
+    #1e293b,
+    #111827
+  );
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ============================= */
+/* LOGIN CARD */
+/* ============================= */
+
+.login-card {
+  width: 400px;
+  max-width: 90%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(12px);
+
+  padding: 40px;
+
+  border-radius: 20px;
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.4);
+
+  text-align: center;
+
+  border: 1px solid
+    rgba(255, 255, 255, 0.15);
+
+  box-sizing: border-box;
+}
+
+/* ============================= */
+/* TITLE */
+/* ============================= */
+
+.login-card h2 {
+  color: white;
+
+  font-size: 34px;
+
+  margin-bottom: 25px;
+}
+
+/* ============================= */
+/* INPUTS */
+/* ============================= */
+
+.login-card input {
+  width: 100%;
+
+  padding: 14px;
+
+  margin: 12px 0;
+
+  border: none;
+
+  border-radius: 10px;
+
+  outline: none;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  color: white;
+
+  font-size: 16px;
+
+  box-sizing: border-box;
+}
+
+.login-card input::placeholder {
+  color: #d1d5db;
+}
+
+/* ============================= */
+/* OTP INPUT */
+/* ============================= */
+
+.otp-input {
+  text-align: center;
+
+  font-size: 24px !important;
+
+  letter-spacing: 8px;
+
+  font-weight: bold;
+}
+
+/* ============================= */
+/* MAIN BUTTON */
+/* ============================= */
+
+.login-card button {
+  width: 100%;
+
+  padding: 14px;
+
+  margin-top: 15px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #f97316
+    );
+
+  color: white;
+
+  font-size: 18px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.login-card button:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(37, 99, 235, 0.4);
+}
+
+.login-card button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+/* ============================= */
+/* OTP MESSAGE */
+/* ============================= */
+
+.otp-message {
+  color: #d1d5db;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  margin-bottom: 10px;
+}
+
+/* ============================= */
+/* TIMER */
+/* ============================= */
+
+.otp-timer {
+  color: #fbbf24;
+
+  font-size: 14px;
+
+  margin-top: 15px;
+}
+
+/* ============================= */
+/* RESEND BUTTON */
+/* ============================= */
+
+.resend-button {
+  background: transparent !important;
+
+  color: #60a5fa !important;
+
+  box-shadow: none !important;
+
+  margin-top: 8px !important;
+
+  font-size: 15px !important;
+}
+
+.resend-button:hover {
+  transform: none !important;
+
+  text-decoration: underline;
+}
+
+/* ============================= */
+/* BACK BUTTON */
+/* ============================= */
+
+.back-button {
+  background: transparent !important;
+
+  color: #d1d5db !important;
+
+  box-shadow: none !important;
+
+  font-size: 14px !important;
+
+  margin-top: 5px !important;
+}
+
+.back-button:hover {
+  transform: none !important;
+
+  text-decoration: underline;
+}
+
+/* ============================= */
+/* LOGO */
+/* ============================= */
+
+.login-logo {
+  margin-top: 25px;
+
+  text-align: center;
+}
+
+.login-logo img {
+  width: 220px;
+
+  max-width: 80%;
+
+  height: auto;
+}
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 500px) {
+
+  .login-container {
+    padding: 15px;
+  }
+
+  .login-card {
+    width: 100%;
+
+    max-width: 400px;
+
+    padding: 30px 20px;
+  }
+
+  .login-card h2 {
+    font-size: 28px;
+  }
+
+  .login-logo img {
+    width: 180px;
+  }
+
+  .otp-input {
+    font-size: 20px !important;
+
+    letter-spacing: 5px;
+  }
+}

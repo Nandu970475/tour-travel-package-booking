@@ -1,0 +1,59 @@
+.booking-container {
+  min-height: 100vh;
+  background-image: url("https://images.pexels.com/photos/2166559/pexels-photo-2166559.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.booking-card {
+  width: 100%;
+  max-width: 550px;
+  background: rgba(255, 255, 255, 0.57);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.booking-card h1 {
+  text-align: center;
+  color: green;
+  margin-bottom: 20px;
+}
+
+.booking-card input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.amount {
+  text-align: center;
+  color: green;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.payment-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: green;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.payment-btn:hover {
+  background: darkgreen;
+}

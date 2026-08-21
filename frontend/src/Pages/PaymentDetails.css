@@ -1,0 +1,111 @@
+.payment-details-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg,
+      #050102,
+      #120508,
+      #f43a59,
+      #080413,
+      #130e06);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+  padding: 30px;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.payment-card {
+  width: 420px;
+  max-width: 95%;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  padding: 30px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.payment-card h1 {
+  margin-bottom: 10px;
+  color: #00ffd5;
+}
+
+.payment-card h2 {
+  margin-bottom: 10px;
+  color: #ffd54f;
+}
+
+.payment-card h3 {
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.payment-card input,
+.payment-card select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.payment-card input:focus,
+.payment-card select:focus {
+  border: 2px solid #00ffd5;
+}
+
+.payment-card button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+  transition: 0.3s;
+}
+
+.payment-card button:hover {
+  transform: scale(1.05);
+}
+
+.payment-card button:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
+
+.payment-card p {
+  margin-top: 15px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.payment-card select {
+  background: white;
+  color: black;
+}
+
+.payment-card input::placeholder {
+  color: #777;
+}
