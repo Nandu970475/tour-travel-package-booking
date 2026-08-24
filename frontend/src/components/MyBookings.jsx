@@ -15,8 +15,7 @@ function MyBookings() {
     try {
       setLoading(true);
 
-      const res = await axios.get("${import.meta.env.VITE_API_URL}/api/bookings");
-
+     const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/bookings`);
       // safer fallback in case backend structure changes
       setBookings(res.data?.data || res.data || []);
     } catch (err) {
