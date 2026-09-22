@@ -6,10 +6,23 @@ function AdminDashboard() {
 
   return (
     <div className="admin-dashboard">
-      <h1 className="dashboard-title">Admin Dashboard</h1>
+
+      {/* TOP RIGHT PROFILE */}
+      <button
+        className="profile-btn"
+        onClick={() => navigate("/adminprofile")}
+      >
+        👤 Profile
+      </button>
+
+      {/* DASHBOARD TITLE */}
+      <h1 className="dashboard-title">
+        Admin Dashboard
+      </h1>
 
       <div className="dashboard-grid">
 
+        {/* Add Tour */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/addtour")}
@@ -18,6 +31,7 @@ function AdminDashboard() {
           <p>Add new tour packages</p>
         </div>
 
+        {/* View Tours */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/viewtours")}
@@ -26,6 +40,7 @@ function AdminDashboard() {
           <p>Manage available tours</p>
         </div>
 
+        {/* Edit Tour */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/edittour")}
@@ -34,6 +49,7 @@ function AdminDashboard() {
           <p>Update tour details</p>
         </div>
 
+        {/* Delete Tour */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/deletetour")}
@@ -42,6 +58,7 @@ function AdminDashboard() {
           <p>Remove tour packages</p>
         </div>
 
+        {/* View Bookings */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/bookings")}
@@ -50,6 +67,7 @@ function AdminDashboard() {
           <p>Check customer bookings</p>
         </div>
 
+        {/* Registered Users */}
         <div
           className="dashboard-card"
           onClick={() => navigate("/users")}
@@ -60,12 +78,14 @@ function AdminDashboard() {
 
       </div>
 
+      {/* LOGOUT */}
       <button
         className="logout-btn"
         onClick={() => navigate("/admin")}
       >
-         Logout
+        Logout
       </button>
+
     </div>
   );
 }
