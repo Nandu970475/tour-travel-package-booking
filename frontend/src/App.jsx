@@ -27,6 +27,7 @@ import ViewBookings from "./Pages/ViewBookings";
 import RegisteredUsers from "./Pages/RegisteredUsers";
 
 import Categories from "./components/Categories";
+import AdminProfile from "./Pages/AdminProfile";
 
 function App() {
   return (
@@ -122,7 +123,10 @@ function App() {
         path="/users"
         element={<RegisteredUsers />}
       />
-
+<Route
+  path="/adminprofile"
+  element={<AdminProfile />}
+/>
     </Routes>
   );
 }
