@@ -1,0 +1,194 @@
+.admin-profile-page {
+  min-height: 100vh;
+  background: #f4f7fb;
+  padding: 25px;
+}
+
+/* TOP BAR */
+
+.profile-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.back-dashboard-btn,
+.logout-profile-btn {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.back-dashboard-btn {
+  background: #0d6efd;
+  color: white;
+}
+
+.logout-profile-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.back-dashboard-btn:hover,
+.logout-profile-btn:hover {
+  opacity: 0.85;
+}
+
+/* PROFILE CARD */
+
+.admin-profile-card {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+}
+
+/* AVATAR */
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #e9f2ff;
+
+  font-size: 55px;
+}
+
+.admin-profile-card h1 {
+  margin-bottom: 5px;
+  color: #222;
+}
+
+.profile-subtitle {
+  color: #777;
+  margin-bottom: 30px;
+}
+
+/* DETAILS */
+
+.profile-details {
+  text-align: left;
+}
+
+.profile-field {
+  margin-bottom: 20px;
+}
+
+.profile-field label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 7px;
+  color: #333;
+}
+
+.profile-field p {
+  margin: 0;
+  padding: 12px;
+  background: #f5f5f5;
+  border-radius: 7px;
+  color: #555;
+}
+
+.profile-field input {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px;
+
+  border: 1px solid #ccc;
+  border-radius: 7px;
+
+  font-size: 15px;
+}
+
+/* BUTTONS */
+
+.profile-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.profile-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.edit-profile-btn,
+.save-profile-btn {
+  background: #0d6efd;
+  color: white;
+}
+
+.cancel-profile-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.edit-profile-btn:hover,
+.save-profile-btn:hover,
+.cancel-profile-btn:hover {
+  opacity: 0.85;
+}
+
+/* CHANGE PASSWORD */
+
+.change-password-btn {
+  width: 100%;
+  margin-top: 15px;
+
+  padding: 12px;
+
+  border: 1px solid #0d6efd;
+  background: white;
+  color: #0d6efd;
+
+  border-radius: 7px;
+
+  cursor: pointer;
+
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.change-password-btn:hover {
+  background: #0d6efd;
+  color: white;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .admin-profile-page {
+    padding: 15px;
+  }
+
+  .admin-profile-card {
+    padding: 25px 20px;
+  }
+
+  .profile-buttons {
+    flex-direction: column;
+  }
+
+}
