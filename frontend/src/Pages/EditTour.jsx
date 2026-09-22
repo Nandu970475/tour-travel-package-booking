@@ -6,72 +6,80 @@ function EditTour() {
   const [tours, setTours] = useState([]);
   const [editingId, setEditingId] = useState(null);
 
- const [formData, setFormData] = useState({
-  title: "",
-  city: "",
-  category: "",
-  price: "",
-  roomPrice: "",
-  foodPrice: "",
-  guidePrice: "",
-  localTransportPrice: "",
-  ticketPrice: "",
-  insurancePrice: "",
-  description: "",
-  image: "",
-  rating: "",
-  duration: "",
-  places: "",
-  gallery1: "",
-  gallery2: "",
-  gallery3: "",
-  gallery4: "",
-});
+  const [formData, setFormData] = useState({
+    title: "",
+    city: "",
+    category: "",
+    price: "",
+    roomPrice: "",
+    foodPrice: "",
+    guidePrice: "",
+    localTransportPrice: "",
+    ticketPrice: "",
+    insurancePrice: "",
+    description: "",
+    image: "",
+    rating: "",
+    duration: "",
+    places: "",
+    gallery1: "",
+    gallery2: "",
+    gallery3: "",
+    gallery4: "",
+  });
 
   useEffect(() => {
     fetchTours();
   }, []);
 
+  // =========================
+  // FETCH ALL TOURS
+  // =========================
   const fetchTours = async () => {
     try {
       const res = await axios.get(
-        "${import.meta.env.VITE_API_URL}/api/tours"
+        `${import.meta.env.VITE_API_URL}/api/tours`
       );
 
       setTours(res.data.data);
-
     } catch (error) {
-      console.log(error);
+      console.log("Fetch Tours Error:", error);
     }
   };
 
+  // =========================
+  // EDIT TOUR
+  // =========================
   const handleEdit = (tour) => {
     setEditingId(tour._id);
 
-   setFormData({
-  title: tour.title || "",
-  city: tour.city || "",
-  category: tour.category || "",
-  price: tour.price || "",
-  roomPrice: tour.roomPrice || "",
-  foodPrice: tour.foodPrice || "",
-  guidePrice: tour.guidePrice || "",
-  localTransportPrice: tour.localTransportPrice || "",
-  ticketPrice: tour.ticketPrice || "",
-  insurancePrice: tour.insurancePrice || "",
-  description: tour.description || "",
-  image: tour.image || "",
-  rating: tour.rating || "",
-  duration: tour.duration || "",
-  places: tour.places || "",
+    setFormData({
+      title: tour.title || "",
+      city: tour.city || "",
+      category: tour.category || "",
+      price: tour.price || "",
+      roomPrice: tour.roomPrice || "",
+      foodPrice: tour.foodPrice || "",
+      guidePrice: tour.guidePrice || "",
+      localTransportPrice: tour.localTransportPrice || "",
+      ticketPrice: tour.ticketPrice || "",
+      insurancePrice: tour.insurancePrice || "",
+      description: tour.description || "",
+      image: tour.image || "",
+      rating: tour.rating || "",
+      duration: tour.duration || "",
+      places: tour.places || "",
 
-  gallery1: tour.gallery?.[0] || "",
-  gallery2: tour.gallery?.[1] || "",
-  gallery3: tour.gallery?.[2] || "",
-  gallery4: tour.gallery?.[3] || "",
-});
-};
+      gallery1: tour.gallery?.[0] || "",
+      gallery2: tour.gallery?.[1] || "",
+      gallery3: tour.gallery?.[2] || "",
+      gallery4: tour.gallery?.[3] || "",
+    });
+  };
 
+  // =========================
+  // HANDLE INPUT CHANGE
+  // =========================
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -79,39 +87,42 @@ function EditTour() {
     });
   };
 
+  // =========================
+  // UPDATE TOUR
+  // =========================
   const handleUpdate = async () => {
     try {
       const {
-  gallery1,
-  gallery2,
-  gallery3,
-  gallery4,
-  ...rest
-} = formData;
+        gallery1,
+        gallery2,
+        gallery3,
+        gallery4,
+        ...rest
+      } = formData;
 
-const updatedTour = {
-  ...rest,
-  gallery: [
-    gallery1,
-    gallery2,
-    gallery3,
-    gallery4,
-  ].filter((img) => img.trim() !== ""),
-};
+      const updatedTour = {
+        ...rest,
 
-await axios.put(
-  `${import.meta.env.VITE_API_URL}/api/tours/${editingId}`,
-  updatedTour
-);
+        gallery: [
+          gallery1,
+          gallery2,
+          gallery3,
+          gallery4,
+        ].filter((img) => img.trim() !== ""),
+      };
+
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}/api/tours/${editingId}`,
+        updatedTour
+      );
 
       alert("✅ Tour Updated Successfully");
 
       setEditingId(null);
 
       fetchTours();
-
     } catch (error) {
-      console.log(error);
+      console.log("Update Tour Error:", error);
       alert("Update Failed");
     }
   };
@@ -121,6 +132,9 @@ await axios.put(
 
       <h1>Edit Tours</h1>
 
+      {/* =========================
+          TOUR LIST
+      ========================= */}
       <div className="tour-list">
 
         {tours.map((tour) => (
@@ -129,6 +143,7 @@ await axios.put(
             key={tour._id}
             className="tour-card"
           >
+
             <img
               src={tour.image}
               alt={tour.title}
@@ -149,126 +164,151 @@ await axios.put(
         ))}
 
       </div>
-            {editingId && (
+
+      {/* =========================
+          EDIT FORM
+      ========================= */}
+      {editingId && (
+
         <div
-  style={{
-    marginTop: "40px",
-    background: "#fff",
-    padding: "30px",
-    borderRadius: "12px",
-    boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
-    maxWidth: "1100px",
-    margin: "40px auto",
-  }}
->
+          style={{
+            marginTop: "40px",
+            background: "#fff",
+            padding: "30px",
+            borderRadius: "12px",
+            boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
+            maxWidth: "1100px",
+            margin: "40px auto",
+          }}
+        >
+
           <h2>Edit Tour</h2>
+
           <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: "20px",
-  }}
->
-
-          <input
-            type="text"
-            name="title"
-            placeholder="Tour Title"
-            value={formData.title}
-            onChange={handleChange}
-          />
-         
-
-          <input
-            type="text"
-            name="city"
-            placeholder="City"
-            value={formData.city}
-            onChange={handleChange}
-          />
-          
-
-          <select
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "20px",
+            }}
           >
-            <option value="">Select Category</option>
-            <option value="Hill Stations">🏔️ Hill Stations</option>
-            <option value="Spiritual Tours">🛕 Spiritual Tours</option>
-            <option value="Honeymoon Tours">❤️ Honeymoon Tours</option>
-            <option value="Beach Tours">🏖️ Beach Tours</option>
-            <option value="Heritage Tours">🏰 Heritage Tours</option>
-            <option value="Nature Tours">🌿 Nature Tours</option>
-            <option value="Adventure Tours">🎢 Adventure Tours</option>
-            <option value="Family Tours">👨‍👩‍👧 Family Tours</option>
-          </select>
 
-          
+            {/* TITLE */}
+            <input
+              type="text"
+              name="title"
+              placeholder="Tour Title"
+              value={formData.title}
+              onChange={handleChange}
+            />
 
-          <input
-            type="number"
-            name="price"
-            placeholder="Package Price"
-            value={formData.price}
-            onChange={handleChange}
-          />
-        
+            {/* CITY */}
+            <input
+              type="text"
+              name="city"
+              placeholder="City"
+              value={formData.city}
+              onChange={handleChange}
+            />
 
-          <input
-            type="number"
-            name="roomPrice"
-            placeholder="Room Price"
-            value={formData.roomPrice}
-            onChange={handleChange}
-          />
-          
+            {/* CATEGORY */}
+            <select
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+            >
+              <option value="">Select Category</option>
+              <option value="Hill Stations">
+                🏔️ Hill Stations
+              </option>
+              <option value="Spiritual Tours">
+                🛕 Spiritual Tours
+              </option>
+              <option value="Honeymoon Tours">
+                ❤️ Honeymoon Tours
+              </option>
+              <option value="Beach Tours">
+                🏖️ Beach Tours
+              </option>
+              <option value="Heritage Tours">
+                🏰 Heritage Tours
+              </option>
+              <option value="Nature Tours">
+                🌿 Nature Tours
+              </option>
+              <option value="Adventure Tours">
+                🎢 Adventure Tours
+              </option>
+              <option value="Family Tours">
+                👨‍👩‍👧 Family Tours
+              </option>
+            </select>
 
-          <input
-            type="number"
-            name="foodPrice"
-            placeholder="Food Price"
-            value={formData.foodPrice}
-            onChange={handleChange}
-          />
-         
+            {/* PACKAGE PRICE */}
+            <input
+              type="number"
+              name="price"
+              placeholder="Package Price"
+              value={formData.price}
+              onChange={handleChange}
+            />
 
-          <input
-            type="number"
-            name="guidePrice"
-            placeholder="Guide Price"
-            value={formData.guidePrice}
-            onChange={handleChange}
-          />
-         
+            {/* ROOM PRICE */}
+            <input
+              type="number"
+              name="roomPrice"
+              placeholder="Room Price"
+              value={formData.roomPrice}
+              onChange={handleChange}
+            />
 
-          <input
-            type="number"
-            name="localTransportPrice"
-            placeholder="Local Transport Price"
-            value={formData.localTransportPrice}
-            onChange={handleChange}
-          />
-          
+            {/* FOOD PRICE */}
+            <input
+              type="number"
+              name="foodPrice"
+              placeholder="Food Price"
+              value={formData.foodPrice}
+              onChange={handleChange}
+            />
 
-          <input
-            type="number"
-            name="ticketPrice"
-            placeholder="Ticket Price"
-            value={formData.ticketPrice}
-            onChange={handleChange}
-          />
-          
+            {/* GUIDE PRICE */}
+            <input
+              type="number"
+              name="guidePrice"
+              placeholder="Guide Price"
+              value={formData.guidePrice}
+              onChange={handleChange}
+            />
 
-          <input
-            type="number"
-            name="insurancePrice"
-            placeholder="Insurance Price"
-            value={formData.insurancePrice}
-            onChange={handleChange}
-          />
-         
-</div>
+            {/* LOCAL TRANSPORT PRICE */}
+            <input
+              type="number"
+              name="localTransportPrice"
+              placeholder="Local Transport Price"
+              value={formData.localTransportPrice}
+              onChange={handleChange}
+            />
+
+            {/* TICKET PRICE */}
+            <input
+              type="number"
+              name="ticketPrice"
+              placeholder="Ticket Price"
+              value={formData.ticketPrice}
+              onChange={handleChange}
+            />
+
+            {/* INSURANCE PRICE */}
+            <input
+              type="number"
+              name="insurancePrice"
+              placeholder="Insurance Price"
+              value={formData.insurancePrice}
+              onChange={handleChange}
+            />
+
+          </div>
+
+          {/* MAIN IMAGE */}
           <input
             type="text"
             name="image"
@@ -276,39 +316,44 @@ await axios.put(
             value={formData.image}
             onChange={handleChange}
           />
-<input
-  type="text"
-  name="gallery1"
-  placeholder="Gallery Image URL 1"
-  value={formData.gallery1}
-  onChange={handleChange}
-/>
 
-<input
-  type="text"
-  name="gallery2"
-  placeholder="Gallery Image URL 2"
-  value={formData.gallery2}
-  onChange={handleChange}
-/>
+          {/* GALLERY IMAGE 1 */}
+          <input
+            type="text"
+            name="gallery1"
+            placeholder="Gallery Image URL 1"
+            value={formData.gallery1}
+            onChange={handleChange}
+          />
 
-<input
-  type="text"
-  name="gallery3"
-  placeholder="Gallery Image URL 3"
-  value={formData.gallery3}
-  onChange={handleChange}
-/>
+          {/* GALLERY IMAGE 2 */}
+          <input
+            type="text"
+            name="gallery2"
+            placeholder="Gallery Image URL 2"
+            value={formData.gallery2}
+            onChange={handleChange}
+          />
 
-<input
-  type="text"
-  name="gallery4"
-  placeholder="Gallery Image URL 4"
-  value={formData.gallery4}
-  onChange={handleChange}
-/>
-          
+          {/* GALLERY IMAGE 3 */}
+          <input
+            type="text"
+            name="gallery3"
+            placeholder="Gallery Image URL 3"
+            value={formData.gallery3}
+            onChange={handleChange}
+          />
 
+          {/* GALLERY IMAGE 4 */}
+          <input
+            type="text"
+            name="gallery4"
+            placeholder="Gallery Image URL 4"
+            value={formData.gallery4}
+            onChange={handleChange}
+          />
+
+          {/* IMAGE PREVIEW */}
           {formData.image && (
             <img
               src={formData.image}
@@ -322,8 +367,7 @@ await axios.put(
             />
           )}
 
-          
-
+          {/* RATING */}
           <input
             type="text"
             name="rating"
@@ -331,8 +375,8 @@ await axios.put(
             value={formData.rating}
             onChange={handleChange}
           />
-         
 
+          {/* DURATION */}
           <input
             type="text"
             name="duration"
@@ -340,8 +384,8 @@ await axios.put(
             value={formData.duration}
             onChange={handleChange}
           />
-        
 
+          {/* PLACES */}
           <textarea
             name="places"
             placeholder="Places"
@@ -350,8 +394,7 @@ await axios.put(
             onChange={handleChange}
           />
 
-          
-
+          {/* DESCRIPTION */}
           <textarea
             name="description"
             placeholder="Description"
@@ -360,8 +403,7 @@ await axios.put(
             onChange={handleChange}
           />
 
-        
-
+          {/* UPDATE BUTTON */}
           <button
             onClick={handleUpdate}
             style={{
@@ -376,8 +418,11 @@ await axios.put(
           >
             Update Tour
           </button>
+
         </div>
+
       )}
+
     </div>
   );
 }

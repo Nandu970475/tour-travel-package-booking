@@ -4,31 +4,33 @@ import axios from "axios";
 import MyBookings from "../components/MyBookings";
 import Categories from "../components/Categories";
 import HeroSlider from "../components/HeroSlider";
+
 function Home() {
   const navigate = useNavigate();
+
   const [tours, setTours] = useState([]);
- const [search, setSearch] = useState("");
- const [selectedCategory, setSelectedCategory] = useState("All Tours");
- 
+  const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All Tours");
+
   useEffect(() => {
     fetchTours();
   }, []);
 
- const fetchTours = async (searchValue = "") => {
-  try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/tours?search=${searchValue}`
-    );
+  const fetchTours = async (searchValue = "") => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/tours?search=${searchValue}`
+      );
 
-    setTours(response.data.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-const handleSearch = () => {
-  fetchTours(search);
-};
-  
+      setTours(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSearch = () => {
+    fetchTours(search);
+  };
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -47,42 +49,56 @@ const handleSearch = () => {
     setPhone("");
   };
 
- const deleteBooking = (id) => {
-  setBookings(bookings.filter((b) => b.id !== id));
-};
-const addToWishlist = async (tourId) => {
-  try {
-    const user = JSON.parse(localStorage.getItem("user"));
+  const deleteBooking = (id) => {
+    setBookings(bookings.filter((b) => b.id !== id));
+  };
 
-    if (!user) {
-      alert("Please login first");
-      return;
-    }
+  const addToWishlist = async (tourId) => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
 
-    const res = await axios.post(
-      "${import.meta.env.VITE_API_URL}/api/wishlist/add",
-      {
-        userId: user._id,
-        tourId: tourId,
+      if (!user) {
+        alert("Please login first");
+        return;
       }
-    );
 
-    alert(res.data.message);
+      const userId = user._id || user.id;
 
-  } catch (error) {
-    console.log(error);
-    alert("Failed to add to wishlist");
-  }
-};
+      if (!userId) {
+        alert("User ID not found. Please login again.");
+        return;
+      }
 
-const userName = localStorage.getItem("userName");
-const filteredTours =
-  selectedCategory === "All Tours"
-    ? tours
-    : tours.filter(
-        (tour) => tour.category === selectedCategory
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/wishlist/add`,
+        {
+          userId: userId,
+          tourId: tourId,
+        }
       );
-return (
+
+      alert(res.data.message);
+    } catch (error) {
+      console.log("Wishlist error:", error);
+
+      if (error.response) {
+        console.log("Server response:", error.response.data);
+      }
+
+      alert("Failed to add to wishlist");
+    }
+  };
+
+  const userName = localStorage.getItem("userName");
+
+  const filteredTours =
+    selectedCategory === "All Tours"
+      ? tours
+      : tours.filter(
+          (tour) => tour.category === selectedCategory
+        );
+
+  return (
     <div
       style={{
         minHeight: "100vh",
@@ -92,7 +108,6 @@ return (
         animation: "gradientBG 10s ease infinite",
       }}
     >
-     
       {/* NAVBAR */}
       <nav
         style={{
@@ -104,46 +119,55 @@ return (
           alignItems: "center",
         }}
       >
-        <h2> DEAL NEST   </h2>
-<div>
-  <a href="#home" style={{ color: "white", marginRight: "20px" }}>
-    Home
-  </a>
+        <h2> DEAL NEST </h2>
 
-  <a href="#tours" style={{ color: "white", marginRight: "20px" }}>
-    Tours
-  </a>
-  <Link
-  to="/mybookings"
-  style={{ color: "white", marginRight: "20px" }}
->
-  My Bookings
-</Link>
-<Link
-  to="/wishlist"
-  style={{ color: "white", marginRight: "20px" }}
->
-  ❤️ Wishlist
-</Link>
+        <div>
+          <a
+            href="#home"
+            style={{ color: "white", marginRight: "20px" }}
+          >
+            Home
+          </a>
 
-  
-<Link
-  to="/contact"
-  style={{ color: "white", marginRight: "20px" }}
->
-  Contact
-</Link>
-  <span
-    style={{
-      color: "white",
-      marginRight: "20px",
-      fontWeight: "bold",
-    }}
-  >
-    Hello, {userName}
-  </span>
+          <a
+            href="#tours"
+            style={{ color: "white", marginRight: "20px" }}
+          >
+            Tours
+          </a>
 
-  <Link to="/register">
+          <Link
+            to="/mybookings"
+            style={{ color: "white", marginRight: "20px" }}
+          >
+            My Bookings
+          </Link>
+
+          <Link
+            to="/wishlist"
+            style={{ color: "white", marginRight: "20px" }}
+          >
+            ❤️ Wishlist
+          </Link>
+
+          <Link
+            to="/contact"
+            style={{ color: "white", marginRight: "20px" }}
+          >
+            Contact
+          </Link>
+
+          <span
+            style={{
+              color: "white",
+              marginRight: "20px",
+              fontWeight: "bold",
+            }}
+          >
+            Hello, {userName}
+          </span>
+
+          <Link to="/register">
             <button
               style={{
                 backgroundColor: "orange",
@@ -161,24 +185,25 @@ return (
       </nav>
 
       {/* HERO SECTION */}
-     <HeroSlider />
-<section style={{ padding: "40px" }}>
-  <h1
-    style={{
-      color: "white",
-      textAlign: "center",
-      marginBottom: "20px",
-    }}
-  >
-    Explore Tour Categories
-  </h1>
+      <HeroSlider />
 
-  <Categories
-    selectedCategory={selectedCategory}
-    setSelectedCategory={setSelectedCategory}
-  />
-</section>
-    
+      <section style={{ padding: "40px" }}>
+        <h1
+          style={{
+            color: "white",
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
+          Explore Tour Categories
+        </h1>
+
+        <Categories
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+        />
+      </section>
+
       {/* WHY CHOOSE US */}
       <section
         style={{

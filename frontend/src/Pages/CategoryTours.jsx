@@ -13,6 +13,9 @@ function CategoryTours() {
     fetchTours();
   }, [category]);
 
+  // =========================
+  // FETCH TOURS
+  // =========================
   const fetchTours = async () => {
     try {
       const res = await axios.get(
@@ -23,38 +26,81 @@ function CategoryTours() {
 
       setTours(res.data.data);
     } catch (error) {
-      console.log(error);
+      console.log("Fetch Tours Error:", error);
     }
   };
 
+  // =========================
+  // ADD TO WISHLIST
+  // =========================
   const addToWishlist = async (tourId) => {
     try {
-      const user = JSON.parse(localStorage.getItem("user"));
+      const storedUser = localStorage.getItem("user");
 
-      if (!user) {
+      console.log("Stored user:", storedUser);
+      console.log("Tour ID:", tourId);
+
+      // Check login
+      if (!storedUser) {
         alert("Please login first");
+        navigate("/login");
         return;
       }
 
+      // Convert stored user string to object
+      const user = JSON.parse(storedUser);
+
+      console.log("User object:", user);
+
+      // Support both _id and id
+      const userId = user._id || user.id;
+
+      console.log("User ID:", userId);
+
+      // Check user ID
+      if (!userId) {
+        alert("User ID not found. Please login again.");
+        return;
+      }
+
+      // Check tour ID
+      if (!tourId) {
+        alert("Tour ID not found.");
+        return;
+      }
+
+      // Add to wishlist
       const res = await axios.post(
-        "${import.meta.env.VITE_API_URL}/api/wishlist/add",
+        `${import.meta.env.VITE_API_URL}/api/wishlist/add`,
         {
-          userId: user._id,
+          userId: userId,
           tourId: tourId,
         }
       );
 
+      console.log("Wishlist response:", res.data);
+
       alert(res.data.message);
+
     } catch (error) {
-      console.log(error);
+      console.log("Wishlist error:", error);
+
+      if (error.response) {
+        console.log("Server response:", error.response.data);
+        console.log("Server status:", error.response.status);
+      }
+
       alert("Failed to add to wishlist");
     }
   };
 
-  // Search Filter
-  const filteredTours = tours.filter((tour) =>
-    tour.title.toLowerCase().includes(search.toLowerCase()) ||
-    tour.city.toLowerCase().includes(search.toLowerCase())
+  // =========================
+  // SEARCH FILTER
+  // =========================
+  const filteredTours = tours.filter(
+    (tour) =>
+      tour.title?.toLowerCase().includes(search.toLowerCase()) ||
+      tour.city?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -64,7 +110,10 @@ function CategoryTours() {
         background: "#f4f7fb",
       }}
     >
-      {/* Banner */}
+
+      {/* =========================
+          BANNER
+      ========================= */}
       <div
         style={{
           background: "#0d6efd",
@@ -73,6 +122,7 @@ function CategoryTours() {
           textAlign: "center",
         }}
       >
+
         <h1>{decodeURIComponent(category)}</h1>
 
         <p>
@@ -94,9 +144,12 @@ function CategoryTours() {
         >
           ← Back to Home
         </button>
+
       </div>
 
-      {/* Search */}
+      {/* =========================
+          SEARCH
+      ========================= */}
       <div
         style={{
           display: "flex",
@@ -104,6 +157,7 @@ function CategoryTours() {
           marginTop: "30px",
         }}
       >
+
         <input
           type="text"
           placeholder="🔍 Search tours..."
@@ -117,9 +171,12 @@ function CategoryTours() {
             fontSize: "16px",
           }}
         />
+
       </div>
 
-      {/* Tour Cards */}
+      {/* =========================
+          TOUR CARDS
+      ========================= */}
       <div
         style={{
           display: "flex",
@@ -129,10 +186,15 @@ function CategoryTours() {
           padding: "40px",
         }}
       >
+
         {filteredTours.length === 0 ? (
+
           <h2>No Tours Found</h2>
+
         ) : (
+
           filteredTours.map((tour) => (
+
             <div
               key={tour._id}
               style={{
@@ -143,6 +205,8 @@ function CategoryTours() {
                 boxShadow: "0 5px 15px rgba(0,0,0,0.2)",
               }}
             >
+
+              {/* TOUR IMAGE */}
               <img
                 src={tour.image}
                 alt={tour.title}
@@ -154,16 +218,25 @@ function CategoryTours() {
               />
 
               <div style={{ padding: "15px" }}>
+
+                {/* TOUR TITLE */}
                 <h2>{tour.title}</h2>
 
+                {/* CITY */}
                 <p>📍 {tour.city}</p>
 
+                {/* RATING */}
                 <p>⭐ {tour.rating || "4.5/5"}</p>
 
+                {/* DURATION */}
                 <p>🕒 {tour.duration || "3 Days"}</p>
 
-                <h3 style={{ color: "green" }}>₹{tour.price}</h3>
+                {/* PRICE */}
+                <h3 style={{ color: "green" }}>
+                  ₹{tour.price}
+                </h3>
 
+                {/* BUTTONS */}
                 <div
                   style={{
                     display: "flex",
@@ -171,8 +244,12 @@ function CategoryTours() {
                     marginTop: "15px",
                   }}
                 >
+
+                  {/* BOOK NOW */}
                   <button
-                    onClick={() => navigate(`/tour/${tour._id}`)}
+                    onClick={() =>
+                      navigate(`/tour/${tour._id}`)
+                    }
                     style={{
                       background: "#0d6efd",
                       color: "white",
@@ -185,8 +262,11 @@ function CategoryTours() {
                     Book Now
                   </button>
 
+                  {/* WISHLIST */}
                   <button
-                    onClick={() => addToWishlist(tour._id)}
+                    onClick={() =>
+                      addToWishlist(tour._id)
+                    }
                     style={{
                       background: "#ff4d6d",
                       color: "white",
@@ -198,12 +278,18 @@ function CategoryTours() {
                   >
                     ❤️ Wishlist
                   </button>
+
                 </div>
+
               </div>
+
             </div>
+
           ))
         )}
+
       </div>
+
     </div>
   );
 }
