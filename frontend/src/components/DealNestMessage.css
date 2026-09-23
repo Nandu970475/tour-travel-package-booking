@@ -1,0 +1,126 @@
+.dealnest-message {
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 99999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  pointer-events: none;
+
+  animation: dealnestMessageShow 0.3s ease;
+}
+
+.dealnest-message-box {
+  min-width: 280px;
+  max-width: 400px;
+
+  padding: 22px 30px;
+
+  border-radius: 16px;
+
+  background: rgba(15, 23, 42, 0.97);
+
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  box-shadow:
+    0 15px 40px rgba(0, 0, 0, 0.45);
+
+  text-align: center;
+
+  color: white;
+}
+
+/* ============================= */
+/* TITLE */
+/* ============================= */
+
+.dealnest-message-title {
+  font-size: 20px;
+
+  font-weight: bold;
+
+  margin-bottom: 8px;
+}
+
+/* ============================= */
+/* MESSAGE */
+/* ============================= */
+
+.dealnest-message-text {
+  font-size: 16px;
+
+  color: #e5e7eb;
+
+  line-height: 1.5;
+}
+
+/* ============================= */
+/* SUCCESS */
+/* ============================= */
+
+.dealnest-message-box.success
+.dealnest-message-title {
+  color: #4ade80;
+}
+
+/* ============================= */
+/* ERROR */
+/* ============================= */
+
+.dealnest-message-box.error
+.dealnest-message-title {
+  color: #f87171;
+}
+
+/* ============================= */
+/* ANIMATION */
+/* ============================= */
+
+@keyframes dealnestMessageShow {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translate(-50%, -45%);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translate(-50%, -50%);
+  }
+}
+
+/* ============================= */
+/* MOBILE */
+/* ============================= */
+
+@media (max-width: 500px) {
+
+  .dealnest-message-box {
+    min-width: 240px;
+
+    max-width: 80%;
+
+    padding: 20px;
+  }
+
+  .dealnest-message-title {
+    font-size: 18px;
+  }
+
+  .dealnest-message-text {
+    font-size: 14px;
+  }
+}

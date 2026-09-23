@@ -1,34 +1,80 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./MyBookings.css";
+import DealNestMessage from "./DealNestMessage";
 
 function MyBookings() {
+
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // DealNest message
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("success");
+
+  // =====================================================
+  // DEALNEST MESSAGE
+  // =====================================================
+
+  const showMessage = (text, type = "success") => {
+    setMessage(text);
+    setMessageType(type);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 2500);
+  };
+
+  // =====================================================
+  // FETCH BOOKINGS
+  // =====================================================
 
   useEffect(() => {
     fetchBookings();
   }, []);
 
-  // ✅ Fetch bookings
   const fetchBookings = async () => {
+
     try {
+
       setLoading(true);
 
-     const res = await axios.get(`${import.meta.env.VITE_API_URL}/api/bookings`);
-      // safer fallback in case backend structure changes
-      setBookings(res.data?.data || res.data || []);
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/bookings`
+      );
+
+      // Safer fallback
+      setBookings(
+        res.data?.data ||
+        res.data ||
+        []
+      );
+
     } catch (err) {
-      console.error("Error fetching bookings:", err);
+
+      console.error(
+        "Error fetching bookings:",
+        err
+      );
+
       setBookings([]);
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
-  // 🎫 Download ticket
+  // =====================================================
+  // DOWNLOAD TICKET
+  // =====================================================
+
   const downloadTicket = (bookingId) => {
-    if (!bookingId) return;
+
+    if (!bookingId) {
+      return;
+    }
 
     window.open(
       `${import.meta.env.VITE_API_URL}/api/ticket/generate/${bookingId}`,
@@ -36,8 +82,12 @@ function MyBookings() {
     );
   };
 
-  // ❌ Cancel booking
+  // =====================================================
+  // CANCEL BOOKING
+  // =====================================================
+
   const cancelBooking = async (id) => {
+
     const reason = prompt(
       `Why are you cancelling your booking?
 
@@ -50,76 +100,179 @@ function MyBookings() {
 7. Other (type your reason)`
     );
 
-    if (!reason?.trim()) return;
+    if (!reason?.trim()) {
+      return;
+    }
 
     try {
+
       await axios.put(
         `${import.meta.env.VITE_API_URL}/api/bookings/cancel/${id}`,
-        { reason }
+        {
+          reason,
+        }
       );
 
-      alert("Booking cancelled successfully.");
+      showMessage(
+        "Booking cancelled successfully.",
+        "success"
+      );
 
+      // Refresh bookings
       fetchBookings();
+
     } catch (err) {
-      console.error("Cancel error:", err);
-      alert("Failed to cancel booking.");
+
+      console.error(
+        "Cancel error:",
+        err
+      );
+
+      showMessage(
+        "Failed to cancel booking.",
+        "error"
+      );
     }
   };
 
+  // =====================================================
+  // PAGE
+  // =====================================================
+
   return (
+
     <div className="my-bookings">
+
+      {/* DEALNEST MESSAGE */}
+
+      <DealNestMessage
+        message={message}
+        type={messageType}
+      />
+
       <h2>My Bookings</h2>
 
+      {/* LOADING */}
+
       {loading ? (
+
         <p>Loading bookings...</p>
+
       ) : bookings.length === 0 ? (
+
+        /* NO BOOKINGS */
+
         <p>No bookings yet.</p>
+
       ) : (
+
+        /* BOOKING GRID */
+
         <div className="booking-grid">
+
           {bookings.map((booking) => (
-            <div className="booking-card" key={booking._id}>
-              <h3>{booking.title || "Tour Booking"}</h3>
 
-              <p><strong>Name:</strong> {booking.name}</p>
-              <p><strong>Date:</strong> {booking.travelDate}</p>
-              <p><strong>Travellers:</strong> {booking.persons}</p>
-              <p><strong>Pickup:</strong> {booking.pickup}</p>
-              <p><strong>Time:</strong> {booking.time}</p>
-              <p><strong>Amount:</strong> ₹{booking.totalAmount}</p>
+            <div
+              className="booking-card"
+              key={booking._id}
+            >
 
-              <p>Payment: {booking.paymentStatus || "Pending"}</p>
+              <h3>
+                {booking.title ||
+                  "Tour Booking"}
+              </h3>
 
               <p>
-                Status:{" "}
-                {booking.bookingStatus === "Cancelled"
+                <strong>Name:</strong>{" "}
+                {booking.name}
+              </p>
+
+              <p>
+                <strong>Date:</strong>{" "}
+                {booking.travelDate}
+              </p>
+
+              <p>
+                <strong>Travellers:</strong>{" "}
+                {booking.persons}
+              </p>
+
+              <p>
+                <strong>Pickup:</strong>{" "}
+                {booking.pickup}
+              </p>
+
+              <p>
+                <strong>Time:</strong>{" "}
+                {booking.time}
+              </p>
+
+              <p>
+                <strong>Amount:</strong>{" "}
+                ₹{booking.totalAmount}
+              </p>
+
+              <p>
+                <strong>Payment:</strong>{" "}
+                {booking.paymentStatus ||
+                  "Pending"}
+              </p>
+
+              <p>
+                <strong>Status:</strong>{" "}
+
+                {booking.bookingStatus ===
+                "Cancelled"
+
                   ? "❌ Cancelled"
+
                   : "🟢 Confirmed"}
               </p>
 
-              {/* 🎫 Ticket Button */}
-              {booking.bookingStatus !== "Cancelled" && (
+              {/* DOWNLOAD TICKET */}
+
+              {booking.bookingStatus !==
+                "Cancelled" && (
+
                 <button
                   className="ticket-btn"
-                  onClick={() => downloadTicket(booking._id)}
+                  onClick={() =>
+                    downloadTicket(
+                      booking._id
+                    )
+                  }
                 >
                   🎫 Download Ticket
                 </button>
+
               )}
 
-              {/* ❌ Cancel Button */}
-              {booking.bookingStatus !== "Cancelled" && (
+              {/* CANCEL BOOKING */}
+
+              {booking.bookingStatus !==
+                "Cancelled" && (
+
                 <button
                   className="cancel-btn"
-                  onClick={() => cancelBooking(booking._id)}
+                  onClick={() =>
+                    cancelBooking(
+                      booking._id
+                    )
+                  }
                 >
                   Cancel Booking
                 </button>
+
               )}
+
             </div>
+
           ))}
+
         </div>
+
       )}
+
     </div>
   );
 }

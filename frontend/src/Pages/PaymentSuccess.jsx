@@ -103,7 +103,7 @@ function PaymentSuccess() {
 
         <button
           className="home-btn"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           Back to Home
         </button>

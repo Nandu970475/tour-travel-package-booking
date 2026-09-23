@@ -1,453 +1,189 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import logo from "../assets/logo.png";
+import DealNestMessage from "../components/DealNestMessage";
 
 function Login() {
-
   const navigate = useNavigate();
-
 
   // =====================================================
   // STATES
   // =====================================================
 
   const [email, setEmail] = useState("");
-
-  const [phone, setPhone] = useState("");
-
-  const [otp, setOtp] = useState("");
-
-  const [otpSent, setOtpSent] = useState(false);
-
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [timer, setTimer] = useState(0);
-
-
-  // =====================================================
-  // OTP TIMER
-  // =====================================================
-
-  useEffect(() => {
-
-    if (timer <= 0) {
-      return;
-    }
-
-
-    const interval = setInterval(() => {
-
-      setTimer((previousTimer) => {
-
-        if (previousTimer <= 1) {
-
-          clearInterval(interval);
-
-          return 0;
-        }
-
-        return previousTimer - 1;
-
-      });
-
-    }, 1000);
-
-
-    return () => clearInterval(interval);
-
-  }, [timer]);
-
+  // DealNest message
+  const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("success");
 
   // =====================================================
-  // SEND OTP
+  // DEALNEST MESSAGE
   // =====================================================
 
-  const handleSendOTP = async () => {
+  const showMessage = (text, type = "success") => {
+    setMessage(text);
+    setMessageType(type);
 
-    // Check email
+    setTimeout(() => {
+      setMessage("");
+    }, 2500);
+  };
+
+  // =====================================================
+  // LOGIN
+  // =====================================================
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
     if (!email.trim()) {
-
-      alert("Please enter your email");
-
+      showMessage("Please enter your email", "error");
       return;
     }
 
-
-    // Check phone
-    if (!phone.trim()) {
-
-      alert("Please enter your phone number");
-
+    if (!password.trim()) {
+      showMessage("Please enter your password", "error");
       return;
     }
-
 
     try {
-
       setLoading(true);
 
-
       const response = await axios.post(
-  `${import.meta.env.VITE_API_URL}/api/users/send-otp`,
-
+        `${import.meta.env.VITE_API_URL}/api/users/login`,
         {
           email: email.trim(),
-          phone: phone.trim(),
+          password: password,
         }
-
       );
 
+      console.log("Login response:", response.data);
 
-      if (response.data.success) {
+      if (response.data.success && response.data.user) {
 
-        // Show OTP in demo mode
-        alert(
-          "OTP sent successfully! ✅\n\n" +
-          "Your Demo OTP is: " +
-          response.data.demoOtp +
-          "\n\n" +
-          "OTP is valid for 60 seconds."
-        );
-
-
-        // Show OTP page
-        setOtpSent(true);
-
-
-        // Start timer
-        setTimer(60);
-
-
-        // Clear old OTP
-        setOtp("");
-
-      }
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert(
-
-        error.response?.data?.message ||
-
-        "Unable to send OTP"
-
-      );
-
-    } finally {
-
-      setLoading(false);
-
-    }
-
-  };
-
-
-  // =====================================================
-  // VERIFY OTP
-  // =====================================================
-
-  const handleVerifyOTP = async () => {
-
-    if (!otp.trim()) {
-
-      alert("Please enter the OTP");
-
-      return;
-
-    }
-
-
-    if (otp.length !== 6) {
-
-      alert("OTP must contain 6 digits");
-
-      return;
-
-    }
-
-
-    try {
-
-      setLoading(true);
-
-
-      const response = await axios.post(
-
-        `${import.meta.env.VITE_API_URL}/api/users/verify-otp`,
-
-        {
-          email: email.trim(),
-          phone: phone.trim(),
-          otp: otp.trim(),
-        }
-
-      );
-
-
-      if (response.data.success) {
-
-        // Save user information
+        // Save complete user information
         localStorage.setItem(
-
           "user",
-
           JSON.stringify(response.data.user)
-
         );
 
+        // Save user's name for Navbar
+        localStorage.setItem(
+          "userName",
+          response.data.user.name
+        );
 
-        alert("Login Successful! ✅");
+        showMessage("Login Successful!", "success");
 
+        // Small delay so user can see the message
+        setTimeout(() => {
+          navigate("/home");
+        }, 1200);
 
-        // Go to home page
-        navigate("/home");
+      } else {
 
+        showMessage(
+          response.data.message || "Login failed",
+          "error"
+        );
       }
-
 
     } catch (error) {
 
-      console.error(error);
+      console.error("Login error:", error);
 
-      alert(
-
+      showMessage(
         error.response?.data?.message ||
-
-        "Invalid OTP"
-
+        "Invalid email or password",
+        "error"
       );
 
     } finally {
-
       setLoading(false);
-
     }
-
   };
-
-
-  // =====================================================
-  // RESEND OTP
-  // =====================================================
-
-  const handleResendOTP = async () => {
-
-    if (timer > 0) {
-
-      return;
-
-    }
-
-
-    await handleSendOTP();
-
-  };
-
-
-  // =====================================================
-  // CHANGE EMAIL / PHONE
-  // =====================================================
-
-  const handleChangeDetails = () => {
-
-    setOtpSent(false);
-
-    setOtp("");
-
-    setTimer(0);
-
-  };
-
 
   // =====================================================
   // PAGE
   // =====================================================
 
   return (
-
     <div className="login-container">
 
+      {/* DEALNEST MESSAGE */}
 
-      {/* ============================= */}
+      <DealNestMessage
+        message={message}
+        type={messageType}
+      />
+
       {/* LOGIN CARD */}
-      {/* ============================= */}
 
       <div className="login-card">
 
+        <h2>Login</h2>
 
-        {/* TITLE */}
+        <form onSubmit={handleLogin}>
 
-        <h2>
+          {/* EMAIL */}
 
-          {otpSent
-            ? "Verify OTP"
-            : "Login"}
+          <input
+            type="email"
+            placeholder="Enter Email"
+            value={email}
+            onChange={(e) =>
+              setEmail(e.target.value)
+            }
+          />
 
-        </h2>
+          {/* PASSWORD */}
 
+          <input
+            type="password"
+            placeholder="Enter Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
+          />
 
-        {/* ============================= */}
-        {/* STEP 1 - EMAIL + PHONE */}
-        {/* ============================= */}
+          {/* LOGIN BUTTON */}
 
-        {!otpSent && (
+          <button
+            type="submit"
+            disabled={loading}
+          >
+            {loading
+              ? "Logging in..."
+              : "Login"}
+          </button>
 
-          <>
+        </form>
 
-            <input
-              type="email"
-              placeholder="Enter Email"
-              value={email}
-              onChange={(e) =>
-                setEmail(e.target.value)
-              }
-            />
+        {/* REGISTER */}
 
+        <p>
+          Don't have an account?{" "}
 
-            <input
-              type="tel"
-              placeholder="Enter Phone Number"
-              value={phone}
-              onChange={(e) =>
-                setPhone(e.target.value)
-              }
-            />
-
-
-            <button
-              onClick={handleSendOTP}
-              disabled={loading}
-            >
-
-              {loading
-                ? "Sending OTP..."
-                : "Send OTP"}
-
-            </button>
-
-          </>
-
-        )}
-
-
-        {/* ============================= */}
-        {/* STEP 2 - OTP */}
-        {/* ============================= */}
-
-        {otpSent && (
-
-          <>
-
-            <p className="otp-message">
-
-              OTP has been generated for
-
-              <br />
-
-              <strong>{phone}</strong>
-
-            </p>
-
-
-            {/* OTP INPUT */}
-
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength="6"
-              placeholder="Enter 6-Digit OTP"
-              value={otp}
-              onChange={(e) => {
-
-                const value =
-                  e.target.value.replace(
-                    /\D/g,
-                    ""
-                  );
-
-                setOtp(value);
-
-              }}
-              className="otp-input"
-            />
-
-
-            {/* VERIFY BUTTON */}
-
-            <button
-              onClick={handleVerifyOTP}
-              disabled={loading}
-            >
-
-              {loading
-                ? "Verifying..."
-                : "Verify OTP & Login"}
-
-            </button>
-
-
-            {/* TIMER */}
-
-            {timer > 0 && (
-
-              <p className="otp-timer">
-
-                Resend OTP in{" "}
-
-                <strong>
-                  {timer}
-                </strong>{" "}
-
-                seconds
-
-              </p>
-
-            )}
-
-
-            {/* RESEND */}
-
-            {timer === 0 && (
-
-              <button
-                className="resend-button"
-                onClick={handleResendOTP}
-                disabled={loading}
-              >
-
-                Resend OTP
-
-              </button>
-
-            )}
-
-
-            {/* CHANGE DETAILS */}
-
-            <button
-              className="back-button"
-              onClick={handleChangeDetails}
-            >
-
-              Change Email / Phone
-
-            </button>
-
-          </>
-
-        )}
+          <span
+            onClick={() => navigate("/register")}
+            style={{
+              cursor: "pointer",
+              color: "#007bff",
+              fontWeight: "bold",
+            }}
+          >
+            Register
+          </span>
+        </p>
 
       </div>
 
-
-      {/* ============================= */}
       {/* LOGO */}
-      {/* ============================= */}
 
       <div className="login-logo">
 
@@ -458,11 +194,8 @@ function Login() {
 
       </div>
 
-
     </div>
-
   );
-
 }
 
 export default Login;
