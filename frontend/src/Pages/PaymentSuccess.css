@@ -1,115 +1,407 @@
+/* =========================================
+   PAYMENT SUCCESS PAGE
+========================================= */
+
 .success-page {
   min-height: 100vh;
+  width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(-45deg,
-      #800020,
-      #4b000f,
-      #ff4d6d,
-      #3a0ca3,
-      #ff9e00);
-  background-size: 400% 400%;
-  animation: gradientMove 10s ease infinite;
-  padding: 30px;
+
+  position: relative;
+  overflow: hidden;
+
+  padding: 50px 20px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #3b0717 0%,
+      #570b22 35%,
+      #6f1028 65%,
+      #3b0717 100%
+    );
+
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-@keyframes gradientMove {
+
+/* =========================================
+   MOVING BACKGROUND LIGHT
+========================================= */
+
+.success-page::before {
+  content: "";
+
+  position: absolute;
+
+  width: 600px;
+  height: 600px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 210, 150, 0.20) 0%,
+      rgba(255, 210, 150, 0.08) 35%,
+      transparent 70%
+    );
+
+  filter: blur(20px);
+
+  top: -250px;
+  left: -200px;
+
+  animation: burgundyLight 12s ease-in-out infinite alternate;
+}
+
+
+/* Second subtle light */
+
+.success-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 500px;
+  height: 500px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.10) 0%,
+      rgba(255, 255, 255, 0.03) 40%,
+      transparent 70%
+    );
+
+  filter: blur(25px);
+
+  bottom: -250px;
+  right: -180px;
+
+  animation: burgundyLightTwo 15s ease-in-out infinite alternate;
+}
+
+
+/* =========================================
+   BACKGROUND ANIMATION
+========================================= */
+
+@keyframes burgundyLight {
+
   0% {
-    background-position: 0% 50%;
+    transform: translate(0, 0);
   }
 
   50% {
-    background-position: 100% 50%;
+    transform: translate(250px, 180px);
   }
 
   100% {
-    background-position: 0% 50%;
+    transform: translate(500px, 50px);
   }
+
 }
+
+
+@keyframes burgundyLightTwo {
+
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(-180px, -120px);
+  }
+
+  100% {
+    transform: translate(-350px, -40px);
+  }
+
+}
+
+
+/* =========================================
+   MAIN SUCCESS CARD
+========================================= */
 
 .success-card {
-  width: 500px;
-  max-width: 95%;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 35px;
+  position: relative;
+
+  z-index: 5;
+
+  width: 900px;
+  max-width: 94vw;
+
+  background: #fffaf7;
+
+  border-radius: 18px;
+
+  padding: 40px 45px;
+
+  box-sizing: border-box;
+
+  color: #2d1b1f;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.40);
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
   text-align: center;
-  color: white;
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+
+  animation: cardAppear 0.7s ease-out;
 }
 
-.tick {
-  font-size: 70px;
-  margin-bottom: 10px;
-  animation: pop 0.6s ease;
-}
 
-@keyframes pop {
-  0% {
-    transform: scale(0);
+/* =========================================
+   CARD APPEAR ANIMATION
+========================================= */
+
+@keyframes cardAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.98);
   }
 
-  80% {
-    transform: scale(1.2);
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+
+/* =========================================
+   SUCCESS ICON
+========================================= */
+
+.tick {
+  width: 72px;
+  height: 72px;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background: #16834b;
+
+  color: white;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 0;
+
+  box-shadow:
+    0 8px 25px rgba(22, 131, 75, 0.30);
+
+  animation: tickAppear 0.7s ease-out;
+}
+
+
+/* Create check mark without emoji */
+
+.tick::after {
+  content: "✓";
+
+  font-size: 42px;
+
+  font-weight: 700;
+
+  line-height: 1;
+
+  color: white;
+}
+
+
+@keyframes tickAppear {
+
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  70% {
+    transform: scale(1.08);
   }
 
   100% {
+    opacity: 1;
     transform: scale(1);
   }
+
 }
+
+
+/* =========================================
+   MAIN HEADING
+========================================= */
 
 .success-card h1 {
-  color: #00ff99;
-  margin-bottom: 10px;
+  margin: 0;
+
+  color: #74152c;
+
+  font-size: 32px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.5px;
 }
+
+
+/* =========================================
+   THANK YOU TEXT
+========================================= */
 
 .thankyou {
-  color: #ddd;
-  margin-bottom: 20px;
+  margin: 10px 0 28px;
+
+  color: #6b5b60;
+
+  font-size: 15px;
 }
+
+
+/* =========================================
+   BOOKING CONFIRMATION BOX
+========================================= */
 
 .booking-box {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 15px;
-  padding: 20px;
-  text-align: left;
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 25px 28px;
+
   margin-bottom: 25px;
+
+  background: #ffffff;
+
+  border-radius: 14px;
+
+  border: 1px solid #eadde0;
+
+  box-shadow:
+    0 8px 25px rgba(70, 15, 30, 0.08);
+
+  text-align: left;
 }
+
+
+/* =========================================
+   BOOKING TITLE
+========================================= */
 
 .booking-box h2 {
+  margin: 0 0 18px;
+
   text-align: center;
-  color: #00ffd5;
-  margin-bottom: 15px;
+
+  color: #74152c;
+
+  font-size: 22px;
+
+  font-weight: 800;
 }
+
+
+/* =========================================
+   HORIZONTAL LINES
+========================================= */
+
+.booking-box hr {
+  border: none;
+
+  border-top: 1px solid #e3d6da;
+
+  margin: 16px 0;
+}
+
+
+/* =========================================
+   BOOKING DETAILS
+========================================= */
 
 .booking-box p {
+  margin: 9px 0;
+
+  font-size: 14px;
+
+  color: #403238;
+
+  line-height: 1.5;
+}
+
+
+.booking-box p strong {
+  display: inline-block;
+
+  min-width: 145px;
+
+  color: #74152c;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   PRICE DETAILS
+========================================= */
+
+.booking-box h3 {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
   margin: 10px 0;
-  font-size: 16px;
+
+  font-size: 15px;
+
+  color: #403238;
+
+  font-weight: 700;
 }
 
-.booking-box strong {
-  color: #ffd54f;
+
+/* =========================================
+   GRAND TOTAL
+========================================= */
+
+.booking-box h2[style] {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin: 15px 0;
+
+  padding: 15px 0;
+
+  border-top: 2px solid #74152c;
+
+  border-bottom: 2px solid #74152c;
+
+  color: #74152c !important;
+
+  font-size: 21px;
 }
 
-.home-btn {
-  width: 100%;
-  padding: 14px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #00c853, #00e676);
-  color: white;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
-}
 
-.home-btn:hover {
-  transform: scale(1.05);
-}
-
-.home-btn:active {
-  transform: scale(0.98);
-}
+/*

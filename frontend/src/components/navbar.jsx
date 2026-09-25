@@ -15,15 +15,13 @@ function Navbar() {
         <li>
           <Link to="/tours">Tours</Link>
         </li>
-    <li>
-  <Link to="/mybookings">My Bookings</Link>
-</li>
-     <li>
-  <Link to="/wishlist">❤️ Wishlist</Link>
-</li>
 
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/mybookings">My Bookings</Link>
+        </li>
+
+        <li>
+          <Link to="/wishlist">❤️ Wishlist</Link>
         </li>
 
         <li>
@@ -32,6 +30,12 @@ function Navbar() {
 
         <li>
           Hello, {userName}
+        </li>
+
+        <li>
+          <Link to="/profile" className="profile-nav-btn">
+            👤 Profile
+          </Link>
         </li>
       </ul>
     </nav>

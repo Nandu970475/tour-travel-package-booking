@@ -1,19 +1,23 @@
-/* =====================================================
-   PAYMENT PAGE - NEW DESIGN
-===================================================== */
+/* ================================
+   PAYMENT PAGE
+================================ */
 
 .payment-page {
   min-height: 100vh;
   width: 100%;
 
   position: relative;
+
   overflow: hidden;
 
   display: flex;
+
   justify-content: center;
   align-items: center;
 
   padding: 40px 20px;
+
+  box-sizing: border-box;
 
   background:
     linear-gradient(
@@ -28,9 +32,9 @@
 }
 
 
-/* =====================================================
-   BACKGROUND DECORATION
-===================================================== */
+/* ================================
+   BACKGROUND LIGHT EFFECTS
+================================ */
 
 .payment-page::before {
   content: "";
@@ -61,7 +65,7 @@
 
   border-radius: 50%;
 
-  background: rgba(168, 85, 247, 0.15);
+  background: rgba(124, 58, 237, 0.18);
 
   filter: blur(80px);
 
@@ -70,9 +74,9 @@
 }
 
 
-/* =====================================================
-   PLANES
-===================================================== */
+/* ================================
+   SKY
+================================ */
 
 .sky {
   position: absolute;
@@ -90,24 +94,75 @@
 }
 
 
+/* ================================
+   CSS PLANE
+================================ */
+
 .plane {
   position: absolute;
 
-  font-size: 30px;
+  width: 48px;
+  height: 18px;
 
-  opacity: 0.6;
+  opacity: 0.55;
 
-  animation: paymentPlane 12s linear infinite;
+  transform: rotate(-8deg);
+
+  animation: paymentPlane 14s linear infinite;
 }
 
 
-.plane:nth-child(1) {
+/* Plane body */
+
+.plane::before {
+  content: "";
+
+  position: absolute;
+
+  width: 42px;
+  height: 7px;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  border-radius: 10px;
+
+  top: 6px;
+  left: 3px;
+}
+
+
+/* Plane wings */
+
+.plane::after {
+  content: "";
+
+  position: absolute;
+
+  width: 24px;
+  height: 5px;
+
+  background: rgba(255, 255, 255, 0.8);
+
+  border-radius: 5px;
+
+  top: 2px;
+  left: 12px;
+
+  transform: rotate(18deg);
+}
+
+
+/* Different plane positions */
+
+.plane-one {
   top: 20%;
   left: -80px;
+
+  animation-delay: 0s;
 }
 
 
-.plane:nth-child(2) {
+.plane-two {
   top: 50%;
   left: -120px;
 
@@ -115,7 +170,7 @@
 }
 
 
-.plane:nth-child(3) {
+.plane-three {
   top: 75%;
   left: -100px;
 
@@ -123,74 +178,85 @@
 }
 
 
+/* ================================
+   PLANE ANIMATION
+================================ */
+
 @keyframes paymentPlane {
 
   0% {
-    transform:
-      translateX(0)
-      rotate(10deg);
-
+    transform: translateX(0) rotate(-8deg);
     opacity: 0;
   }
 
   15% {
-    opacity: 0.7;
+    opacity: 0.55;
   }
 
   80% {
-    opacity: 0.7;
+    opacity: 0.55;
   }
 
   100% {
-    transform:
-      translateX(120vw)
-      rotate(10deg);
-
+    transform: translateX(120vw) rotate(-8deg);
     opacity: 0;
   }
+
 }
 
 
-/* =====================================================
-   PAYMENT CARD
-===================================================== */
+/* ================================
+   MAIN PAYMENT CONTAINER
+================================ */
 
 .payment-container {
   position: relative;
 
   z-index: 5;
 
-  width: 420px;
+  width: 1000px;
 
-  max-width: 95vw;
+  max-width: 92vw;
 
-  padding: 32px;
+  min-height: 540px;
 
-  border-radius: 24px;
+  padding: 35px 45px;
 
-  background: rgba(255, 255, 255, 0.97);
+  box-sizing: border-box;
+
+  border-radius: 12px;
+
+  background: rgba(255, 255, 255, 0.98);
 
   color: #172554;
 
-  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 
   box-shadow:
-    0 25px 70px
-    rgba(0, 0, 0, 0.35);
+    0 25px 70px rgba(0, 0, 0, 0.4);
 
-  border: 1px solid
-    rgba(255, 255, 255, 0.8);
+  display: grid;
+
+  grid-template-columns: 0.75fr 1.25fr;
+
+  column-gap: 45px;
+
+  align-items: start;
 }
 
 
-/* =====================================================
-   HEADING
-===================================================== */
+/* ================================
+   MAIN HEADING
+================================ */
 
 .payment-container h1 {
+  grid-column: 1 / -1;
+
   margin: 0 0 25px;
 
-  font-size: 24px;
+  text-align: center;
+
+  font-size: 28px;
 
   color: #172554;
 
@@ -198,21 +264,31 @@
 }
 
 
-/* =====================================================
-   PAYMENT BUTTONS
-===================================================== */
+/* ================================
+   PAYMENT METHODS
+================================ */
 
-.payment-container > button:not(.pay-btn) {
+.payment-methods {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
 
   width: 100%;
+}
 
-  height: 48px;
 
-  margin: 7px 0;
+.payment-methods button {
+  width: 100%;
+
+  height: 52px;
+
+  padding: 0 18px;
 
   border: none;
 
-  border-radius: 12px;
+  border-radius: 10px;
 
   cursor: pointer;
 
@@ -222,6 +298,8 @@
 
   font-weight: 700;
 
+  text-align: center;
+
   background:
     linear-gradient(
       90deg,
@@ -230,31 +308,24 @@
     );
 
   box-shadow:
-    0 6px 15px
-    rgba(37, 99, 235, 0.22);
+    0 6px 15px rgba(37, 99, 235, 0.22);
 
   transition:
     transform 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
 
-.payment-container > button:not(.pay-btn):hover {
-
+.payment-methods button:hover {
   transform: translateY(-2px);
 
   box-shadow:
-    0 10px 22px
-    rgba(37, 99, 235, 0.35);
+    0 10px 22px rgba(37, 99, 235, 0.35);
 }
 
 
-/* =====================================================
-   ACTIVE BUTTON
-===================================================== */
-
-.payment-container > button.active {
-
+.payment-methods button.active {
   background:
     linear-gradient(
       90deg,
@@ -263,24 +334,24 @@
     );
 
   box-shadow:
-    0 8px 20px
-    rgba(16, 185, 129, 0.35);
+    0 8px 20px rgba(16, 185, 129, 0.35);
 
   transform: translateY(-2px);
 }
 
 
-/* =====================================================
+/* ================================
    BOOKING SUMMARY
-===================================================== */
+================================ */
 
 .booking-summary {
+  width: 100%;
 
-  margin-top: 22px;
+  padding: 22px;
 
-  padding: 20px;
+  box-sizing: border-box;
 
-  border-radius: 18px;
+  border-radius: 14px;
 
   background:
     linear-gradient(
@@ -294,17 +365,13 @@
   text-align: left;
 
   box-shadow:
-    inset 0 1px 0
-    rgba(255,255,255,0.8);
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 
-/* =====================================================
-   SUMMARY TITLE
-===================================================== */
+/* Summary heading */
 
 .booking-summary h2 {
-
   margin: 0 0 18px;
 
   text-align: center;
@@ -317,105 +384,120 @@
 }
 
 
-/* =====================================================
-   DETAILS
-===================================================== */
+/* Summary information */
 
 .booking-summary p {
-
   display: flex;
 
   justify-content: space-between;
 
-  gap: 10px;
+  align-items: flex-start;
 
-  margin: 9px 0;
+  gap: 15px;
+
+  margin: 8px 0;
 
   font-size: 13px;
+
+  color: #475569;
+
+  line-height: 1.4;
+}
+
+
+.booking-summary p strong {
+  color: #172554;
+
+  font-weight: 700;
+
+  min-width: 105px;
+}
+
+
+.booking-summary p span {
+  text-align: right;
+
+  word-break: break-word;
 
   color: #475569;
 }
 
 
-.booking-summary p strong {
-
-  color: #172554;
-
-  font-weight: 700;
-}
-
-
-/* =====================================================
-   DIVIDER
-===================================================== */
+/* Horizontal lines */
 
 .booking-summary hr {
-
   border: none;
 
-  border-top:
-    1px solid #cbd5e1;
+  border-top: 1px solid #cbd5e1;
 
   margin: 16px 0;
 }
 
 
-/* =====================================================
-   PRICE
-===================================================== */
+/* Price rows */
 
 .booking-summary h3 {
-
   display: flex;
 
   justify-content: space-between;
+
+  align-items: center;
+
+  gap: 10px;
 
   margin: 10px 0;
 
   color: #334155;
 
   font-size: 14px;
+
+  font-weight: 700;
 }
 
 
-/* =====================================================
+/* ================================
    GRAND TOTAL
-===================================================== */
+================================ */
 
-.booking-summary h2[style] {
-
+.grand-total {
   display: flex;
 
   justify-content: space-between;
+
+  align-items: center;
+
+  gap: 10px;
 
   margin-top: 16px;
 
   padding-top: 15px;
 
-  border-top:
-    2px dashed #cbd5e1;
+  border-top: 2px dashed #cbd5e1;
 
-  color: #059669 !important;
+  color: #059669;
 
-  font-size: 20px;
+  font-size: 21px;
+
+  font-weight: 800;
 }
 
 
-/* =====================================================
+/* ================================
    CONTINUE BUTTON
-===================================================== */
+================================ */
 
 .payment-container .pay-btn {
+  grid-column: 1 / -1;
 
   width: 100%;
 
-  height: 48px;
+  height: 50px;
 
-  margin-top: 18px;
+  margin-top: 25px;
 
   border: none;
 
-  border-radius: 12px;
+  border-radius: 10px;
 
   cursor: pointer;
 
@@ -430,11 +512,10 @@
       90deg,
       #f97316,
       #ef4444
-    ) !important;
+    );
 
   box-shadow:
-    0 8px 20px
-    rgba(249, 115, 22, 0.30);
+    0 8px 20px rgba(249, 115, 22, 0.3);
 
   transition:
     transform 0.2s ease,
@@ -443,22 +524,21 @@
 
 
 .payment-container .pay-btn:hover {
-
   transform: translateY(-2px);
 
   box-shadow:
-    0 12px 25px
-    rgba(249, 115, 22, 0.40);
+    0 12px 25px rgba(249, 115, 22, 0.4);
 }
 
 
-/* =====================================================
-   SECURE PAYMENT
-===================================================== */
+/* ================================
+   SECURITY TEXT
+================================ */
 
 .secure-text {
+  grid-column: 1 / -1;
 
-  margin: 18px 0 0;
+  margin: 14px 0 0;
 
   color: #059669;
 
@@ -470,12 +550,11 @@
 }
 
 
-/* =====================================================
+/* ================================
    RUNWAY
-===================================================== */
+================================ */
 
 .runway {
-
   position: absolute;
 
   bottom: 0;
@@ -500,14 +579,52 @@
 }
 
 
-/* =====================================================
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 900px) {
+
+  .payment-container {
+    width: 90vw;
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+
+    padding: 30px;
+  }
+
+  .payment-container h1 {
+    grid-column: 1;
+  }
+
+  .payment-methods {
+    grid-column: 1;
+  }
+
+  .booking-summary {
+    grid-column: 1;
+  }
+
+  .payment-container .pay-btn {
+    grid-column: 1;
+  }
+
+  .secure-text {
+    grid-column: 1;
+  }
+
+}
+
+
+/* ================================
    MOBILE
-===================================================== */
+================================ */
 
 @media (max-width: 600px) {
 
   .payment-page {
-
     align-items: flex-start;
 
     padding-top: 25px;
@@ -517,42 +634,85 @@
 
 
   .payment-container {
+    width: 95vw;
 
-    width: 95%;
+    max-width: 95vw;
+
+    min-height: auto;
 
     padding: 22px;
 
-    border-radius: 20px;
+    border-radius: 12px;
+
+    display: block;
   }
 
 
   .payment-container h1 {
+    font-size: 21px;
 
-    font-size: 20px;
+    margin-bottom: 20px;
   }
 
 
-  .booking-summary {
-
-    padding: 16px;
+  .payment-methods {
+    margin-bottom: 20px;
   }
 
 
-  .booking-summary p {
-
-    font-size: 12px;
-  }
-
-
-  .booking-summary h3 {
+  .payment-methods button {
+    height: 48px;
 
     font-size: 13px;
   }
 
 
-  .plane {
+  .booking-summary {
+    padding: 16px;
+  }
 
-    font-size: 20px;
+
+  .booking-summary h2 {
+    font-size: 19px;
+  }
+
+
+  .booking-summary p {
+    font-size: 12px;
+
+    flex-direction: column;
+
+    gap: 2px;
+  }
+
+
+  .booking-summary p strong {
+    min-width: auto;
+  }
+
+
+  .booking-summary p span {
+    text-align: left;
+  }
+
+
+  .booking-summary h3 {
+    font-size: 13px;
+  }
+
+
+  .grand-total {
+    font-size: 18px;
+  }
+
+
+  .payment-container .pay-btn {
+    margin-top: 20px;
+  }
+
+
+  .plane {
+    transform: scale(0.75);
   }
 
 }

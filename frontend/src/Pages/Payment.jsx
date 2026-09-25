@@ -17,7 +17,6 @@ function Payment() {
     persons = 1,
     pickup = "",
     time = "",
-
     price = 0,
     travelCharge = 0,
     totalAmount = 0,
@@ -44,78 +43,120 @@ function Payment() {
   return (
     <div className="payment-page">
 
+      {/* Animated background */}
       <div className="sky">
-        <div className="plane">✈️</div>
-        <div className="plane">✈️</div>
-        <div className="plane">✈️</div>
+        <div className="plane plane-one"></div>
+        <div className="plane plane-two"></div>
+        <div className="plane plane-three"></div>
       </div>
 
+      {/* Main payment box */}
       <div className="payment-container">
 
         <h1>Select Payment Method</h1>
 
-        <button
-          className={paymentMethod === "UPI" ? "active" : ""}
-          onClick={() => setPaymentMethod("UPI")}
-        >
-          📱 UPI Payment
-        </button>
+        {/* Payment methods */}
+        <div className="payment-methods">
 
-        <button
-          className={paymentMethod === "Card" ? "active" : ""}
-          onClick={() => setPaymentMethod("Card")}
-        >
-          💳 Credit / Debit Card
-        </button>
+          <button
+            className={paymentMethod === "UPI" ? "active" : ""}
+            onClick={() => setPaymentMethod("UPI")}
+          >
+            UPI Payment
+          </button>
 
-        <button
-          className={paymentMethod === "Net Banking" ? "active" : ""}
-          onClick={() => setPaymentMethod("Net Banking")}
-        >
-          🏦 Net Banking
-        </button>
+          <button
+            className={paymentMethod === "Card" ? "active" : ""}
+            onClick={() => setPaymentMethod("Card")}
+          >
+            Credit / Debit Card
+          </button>
 
-        <button
-          className={paymentMethod === "Cash" ? "active" : ""}
-          onClick={() => setPaymentMethod("Cash")}
-        >
-          💵 Cash on Arrival
-        </button>
+          <button
+            className={
+              paymentMethod === "Net Banking" ? "active" : ""
+            }
+            onClick={() => setPaymentMethod("Net Banking")}
+          >
+            Net Banking
+          </button>
 
+          <button
+            className={paymentMethod === "Cash" ? "active" : ""}
+            onClick={() => setPaymentMethod("Cash")}
+          >
+            Cash on Arrival
+          </button>
+
+        </div>
+
+        {/* Booking Summary */}
         <div className="booking-summary">
 
           <h2>Booking Summary</h2>
 
-          <p><strong>Tour :</strong> {title}</p>
+          <p>
+            <strong>Tour :</strong>
+            <span>{title}</span>
+          </p>
 
-          <p><strong>Name :</strong> {name}</p>
+          <p>
+            <strong>Name :</strong>
+            <span>{name}</span>
+          </p>
 
-          <p><strong>Phone :</strong> {phone}</p>
+          <p>
+            <strong>Phone :</strong>
+            <span>{phone}</span>
+          </p>
 
-          <p><strong>Email :</strong> {email}</p>
+          <p>
+            <strong>Email :</strong>
+            <span>{email}</span>
+          </p>
 
-          <p><strong>Travel Date :</strong> {travelDate}</p>
+          <p>
+            <strong>Travel Date :</strong>
+            <span>{travelDate}</span>
+          </p>
 
-          <p><strong>Travellers :</strong> {persons}</p>
+          <p>
+            <strong>Travellers :</strong>
+            <span>{persons}</span>
+          </p>
 
-          <p><strong>Pickup City :</strong> {pickup}</p>
+          <p>
+            <strong>Pickup City :</strong>
+            <span>{pickup}</span>
+          </p>
 
-          <p><strong>Pickup Time :</strong> {time}</p>
+          <p>
+            <strong>Pickup Time :</strong>
+            <span>{time}</span>
+          </p>
 
           <hr />
 
-          <h3>🏨 Package Price : ₹{packagePrice}</h3>
+          <h3>
+            <span>Package Price :</span>
+            <span>₹{packagePrice}</span>
+          </h3>
 
-          <h3>🚖 Travel Charge : ₹{travelCharge}</h3>
+          <h3>
+            <span>Travel Charge :</span>
+            <span>₹{travelCharge}</span>
+          </h3>
 
           <hr />
 
-          <h2 style={{ color: "green" }}>
-            Grand Total : ₹{totalAmount}
-          </h2>
+          <div className="grand-total">
+            <span>Grand Total :</span>
+            <span>₹{totalAmount}</span>
+          </div>
 
         </div>
 
+        {/* Continue button */}
         <button
           className="pay-btn"
           onClick={handleContinue}
@@ -123,12 +164,14 @@ function Payment() {
           Continue
         </button>
 
+        {/* Security text */}
         <p className="secure-text">
-          🔒 Secure Payment Gateway
+          Secure Payment Gateway
         </p>
 
       </div>
 
+      {/* Bottom runway */}
       <div className="runway"></div>
 
     </div>
