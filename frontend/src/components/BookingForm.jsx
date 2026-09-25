@@ -7,7 +7,7 @@ function BookingForm() {
   const location = useLocation();
 
   const { title, price } = location.state || {
-    title: "Tour",
+    title: "Tour Package",
     price: 0,
   };
 
@@ -17,73 +17,55 @@ function BookingForm() {
   const [travelDate, setTravelDate] = useState("");
   const [pickup, setPickup] = useState("");
   const [time, setTime] = useState("");
-
   const [persons, setPersons] = useState(1);
-  const [travellers, setTravellers] = useState([""]);
+  const [members, setMembers] = useState([""]);
 
-  // Pickup city charges
- // Pickup city charges
-const pickupCharges = {
-  // Andhra Pradesh
-  Visakhapatnam: 3000,
-  Vijayawada: 1500,
-  Guntur: 1700,
-  Tirupati: 1800,
-  Rajahmundry: 2200,
-  Kakinada: 2400,
-  Nellore: 1900,
-  Kurnool: 2300,
-  Anantapur: 2600,
-  Kadapa: 2200,
-  Ongole: 2000,
-  Eluru: 1800,
-  Srikakulam: 3500,
-  Vizianagaram: 3200,
-  Machilipatnam: 1700,
+  const totalAmount = price * persons;
 
-  // Telangana
-  Hyderabad: 1200,
-  Warangal: 2000,
-  Karimnagar: 2100,
-  Khammam: 1800,
-  Nizamabad: 2500,
-  Mahabubnagar: 2200,
-  Nalgonda: 1700,
-  Adilabad: 3200,
-  Siddipet: 2000,
-  Ramagundam: 2400,
-};
-  const travelCharge = pickupCharges[pickup] || 0;
-
-  const totalAmount = (price * persons) + travelCharge;
-
-  const handlePersonsChange = (value) => {
-    const count = Number(value);
+  const handlePersonsChange = (e) => {
+    const count = Number(e.target.value);
 
     setPersons(count);
 
-    const updatedTravellers = Array.from(
-      { length: count },
-      (_, i) => travellers[i] || ""
+    setMembers((oldMembers) =>
+      Array.from(
+        { length: count },
+        (_, index) => oldMembers[index] || ""
+      )
     );
-
-    setTravellers(updatedTravellers);
   };
 
-  const handleTravellerChange = (index, value) => {
-    const updated = [...travellers];
-    updated[index] = value;
-    setTravellers(updated);
+  const handleMemberChange = (index, value) => {
+    const updatedMembers = [...members];
+    updatedMembers[index] = value;
+    setMembers(updatedMembers);
   };
 
   const handleContinue = () => {
+    if (
+      !name ||
+      !phone ||
+      !email ||
+      !travelDate ||
+      !pickup ||
+      !time
+    ) {
+      alert("Please fill all booking details.");
+      return;
+    }
+
+    if (members.some((member) => !member.trim())) {
+      alert("Please enter the name of every traveller.");
+      return;
+    }
+
     navigate("/payment", {
       state: {
         booking: {
           title,
           price,
           persons,
-          travelCharge,
+          travelCharge: 0,
           totalAmount,
           name,
           phone,
@@ -91,7 +73,7 @@ const pickupCharges = {
           travelDate,
           pickup,
           time,
-          travellers,
+          members,
         },
       },
     });
@@ -101,107 +83,142 @@ const pickupCharges = {
     <div className="booking-container">
       <div className="booking-card">
 
-        <h1>Booking Details</h1>
+        <div className="booking-header">
+          <span>Travel Booking</span>
+          <h1>Complete Your Booking</h1>
+          <p>Please enter your details to continue</p>
+        </div>
 
-        <h2>{title}</h2>
+        <div className="package-box">
+          <p>Selected Package</p>
+          <h2>{title}</h2>
+          <strong>₹{price} per person</strong>
+        </div>
 
-        <input
-          type="text"
-          placeholder="Enter Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <div className="form-section">
+          <h3>Contact Details</h3>
 
-        <input
-          type="tel"
-          placeholder="Enter Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
+          <div className="input-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              placeholder="Enter your full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <div className="input-row">
+            <div className="input-group">
+              <label>Phone Number</label>
+              <input
+                type="tel"
+                placeholder="Enter phone number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
 
-        <input
-          type="date"
-          value={travelDate}
-          onChange={(e) => setTravelDate(e.target.value)}
-        />
+            <div className="input-group">
+              <label>Email Address</label>
+              <input
+                type="email"
+                placeholder="Enter email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
 
-        <input
-          type="number"
-          min="1"
-          value={persons}
-          onChange={(e) => handlePersonsChange(e.target.value)}
-        />
+        <div className="form-section">
+          <h3>Trip Details</h3>
 
-        {travellers.map((traveller, index) => (
-          <input
-            key={index}
-            type="text"
-            placeholder={`Traveller ${index + 1} Name`}
-            value={traveller}
-            onChange={(e) =>
-              handleTravellerChange(index, e.target.value)
-            }
-          />
-        ))}
+          <div className="input-row">
+            <div className="input-group">
+              <label>Travel Date</label>
+              <input
+                type="date"
+                value={travelDate}
+                onChange={(e) => setTravelDate(e.target.value)}
+              />
+            </div>
 
-        <select
-  value={pickup}
-  onChange={(e) => setPickup(e.target.value)}
->
-  <option value="">Select Pickup City</option>
+            <div className="input-group">
+              <label>Pickup Time</label>
+              <input
+                type="time"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </div>
+          </div>
 
-  {/* Andhra Pradesh */}
-  <option value="Visakhapatnam">Visakhapatnam</option>
-  <option value="Vijayawada">Vijayawada</option>
-  <option value="Guntur">Guntur</option>
-  <option value="Tirupati">Tirupati</option>
-  <option value="Rajahmundry">Rajahmundry</option>
-  <option value="Kakinada">Kakinada</option>
-  <option value="Nellore">Nellore</option>
-  <option value="Kurnool">Kurnool</option>
-  <option value="Anantapur">Anantapur</option>
-  <option value="Kadapa">Kadapa</option>
-  <option value="Ongole">Ongole</option>
-  <option value="Eluru">Eluru</option>
-  <option value="Srikakulam">Srikakulam</option>
-  <option value="Vizianagaram">Vizianagaram</option>
-  <option value="Machilipatnam">Machilipatnam</option>
+          <div className="input-row">
+            <div className="input-group">
+              <label>Pickup City</label>
+              <input
+                type="text"
+                placeholder="Enter your pickup city"
+                value={pickup}
+                onChange={(e) => setPickup(e.target.value)}
+              />
+            </div>
 
-  {/* Telangana */}
-  <option value="Hyderabad">Hyderabad</option>
-  <option value="Warangal">Warangal</option>
-  <option value="Karimnagar">Karimnagar</option>
-  <option value="Khammam">Khammam</option>
-  <option value="Nizamabad">Nizamabad</option>
-  <option value="Mahabubnagar">Mahabubnagar</option>
-  <option value="Nalgonda">Nalgonda</option>
-  <option value="Adilabad">Adilabad</option>
-  <option value="Siddipet">Siddipet</option>
-  <option value="Ramagundam">Ramagundam</option>
-</select>
+            <div className="input-group">
+              <label>Number of Travellers</label>
+              <input
+                type="number"
+                min="1"
+                max="20"
+                value={persons}
+                onChange={handlePersonsChange}
+              />
+            </div>
+          </div>
+        </div>
 
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        />
+        <div className="form-section traveller-section">
+          <h3>Traveller Details</h3>
+          <p className="section-note">
+            Enter the name of each person travelling.
+          </p>
 
-        <hr />
+          <div className="member-grid">
+            {members.map((member, index) => (
+              <div className="member-box" key={index}>
+                <label>Traveller {index + 1}</label>
+                <input
+                  type="text"
+                  placeholder={`Enter traveller ${index + 1} name`}
+                  value={member}
+                  onChange={(e) =>
+                    handleMemberChange(index, e.target.value)
+                  }
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
-        <h3>Package Price : ₹{price * persons}</h3>
+        <div className="booking-summary">
+          <h3>Booking Summary</h3>
 
-        <h3>Travel Charge : ₹{travelCharge}</h3>
+          <div className="summary-line">
+            <span>Package Price</span>
+            <span>₹{price}</span>
+          </div>
 
-        <h2 style={{ color: "green" }}>
-          Grand Total : ₹{totalAmount}
-        </h2>
+          <div className="summary-line">
+            <span>Travellers</span>
+            <span>{persons}</span>
+          </div>
+
+          <div className="summary-line total-line">
+            <span>Total Amount</span>
+            <strong>₹{totalAmount}</strong>
+          </div>
+        </div>
 
         <button
           className="payment-btn"

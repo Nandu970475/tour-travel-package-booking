@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import "./PaymentSuccess.css";
 
@@ -11,8 +11,9 @@ function PaymentSuccess() {
 
   const hasSaved = useRef(false);
 
-  const bookingId =
-    "BK" + Math.floor(100000 + Math.random() * 900000);
+  const [bookingId] = useState(
+    "BK" + Math.floor(100000 + Math.random() * 900000)
+  );
 
   const packagePrice =
     (booking?.price || 0) * (booking?.persons || 1);
@@ -21,6 +22,8 @@ function PaymentSuccess() {
 
   const grandTotal = booking?.totalAmount || 0;
 
+  const members = booking?.members || booking?.travellers || [];
+
   useEffect(() => {
     if (!booking || hasSaved.current) return;
 
@@ -28,11 +31,14 @@ function PaymentSuccess() {
 
     const saveBooking = async () => {
       try {
-        await axios.post(`${import.meta.env.VITE_API_URL}/api/bookings`, {
-          ...booking,
-          paymentMethod,
-          travelCharge,
-        });
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/bookings`,
+          {
+            ...booking,
+            paymentMethod,
+            travelCharge,
+          }
+        );
 
         console.log("Booking saved successfully");
       } catch (err) {
@@ -45,60 +51,181 @@ function PaymentSuccess() {
 
   return (
     <div className="success-page">
-      <div className="success-card">
 
-        <div className="tick">✅</div>
+      <div className="ticket-wrapper">
 
-        <h1>Payment Successful!</h1>
+        {/* Header */}
 
-        <p className="thankyou">
-          Thank you for booking with us.
-        </p>
+        <div className="ticket-header">
+          <div>
+            <span className="ticket-label">DEAL NEST</span>
+            <h1>Booking Confirmed</h1>
+            <p>Your journey is ready to begin.</p>
+          </div>
 
-        <div className="booking-box">
+          <div className="ticket-status">
+            <span className="status-dot"></span>
+            Confirmed
+          </div>
+        </div>
 
-          <h2>Booking Confirmation</h2>
+        {/* Main Ticket */}
 
-          <hr />
+        <div className="travel-ticket">
 
-          <p><strong>Booking ID :</strong> {bookingId}</p>
+          <div className="ticket-main">
 
-          <p><strong>Package :</strong> {booking?.title}</p>
+            <div className="package-title">
+              <span>TRAVEL PACKAGE</span>
+              <h2>{booking?.title}</h2>
+            </div>
 
-          <p><strong>Name :</strong> {booking?.name}</p>
+            {/* Journey Information */}
 
-          <p><strong>Phone :</strong> {booking?.phone}</p>
+            <div className="journey">
 
-          <p><strong>Email :</strong> {booking?.email}</p>
+              <div className="journey-place">
+                <span>FROM</span>
+                <strong>{booking?.pickup}</strong>
+                <small>Pickup City</small>
+              </div>
 
-          <p><strong>Travel Date :</strong> {booking?.travelDate}</p>
+              <div className="flight-line">
+                <div className="line"></div>
 
-          <p><strong>Travellers :</strong> {booking?.persons}</p>
+                <div className="plane">
+                  <svg
+                    viewBox="0 0 100 100"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M50 8 L58 40 L90 48 L90 55 L59 54
+                      L55 92 L48 92 L45 55 L14 55
+                      L14 48 L44 40 Z"
+                    />
+                  </svg>
+                </div>
 
-          <p><strong>Pickup City :</strong> {booking?.pickup}</p>
+                <div className="line"></div>
+              </div>
 
-          <p><strong>Pickup Time :</strong> {booking?.time}</p>
+              <div className="journey-place destination">
+                <span>TO</span>
+                <strong>{booking?.title}</strong>
+                <small>Destination</small>
+              </div>
 
-          <p><strong>Payment Method :</strong> {paymentMethod}</p>
+            </div>
 
-          <hr />
+            {/* Trip Information */}
 
-          <h3>🏨 Package Price : ₹{packagePrice}</h3>
+            <div className="ticket-info">
 
-          <h3>🚖 Travel Charge : ₹{travelCharge}</h3>
+              <div>
+                <span>TRAVEL DATE</span>
+                <strong>{booking?.travelDate}</strong>
+              </div>
 
-          <hr />
+              <div>
+                <span>PICKUP TIME</span>
+                <strong>{booking?.time}</strong>
+              </div>
 
-          <h2 style={{ color: "green" }}>
-            Grand Total Paid : ₹{grandTotal}
-          </h2>
+              <div>
+                <span>TRAVELLERS</span>
+                <strong>{booking?.persons}</strong>
+              </div>
 
-          <hr />
+              <div>
+                <span>BOOKING ID</span>
+                <strong>{bookingId}</strong>
+              </div>
 
-          <p style={{ color: "green", fontWeight: "bold" }}>
-            ✅ Booking Confirmed
-          </p>
+            </div>
 
+            {/* Traveller Names */}
+
+            <div className="traveller-area">
+
+              <div className="traveller-heading">
+                <span>TRAVELLERS</span>
+                <small>
+                  {members.length} passenger
+                  {members.length !== 1 ? "s" : ""}
+                </small>
+              </div>
+
+              <div className="traveller-list">
+
+                {members.length > 0 ? (
+                  members.map((member, index) => (
+                    <div
+                      className="traveller"
+                      key={index}
+                    >
+                      <span className="traveller-number">
+                        {index + 1}
+                      </span>
+
+                      <strong>{member}</strong>
+                    </div>
+                  ))
+                ) : (
+                  <div className="traveller">
+                    <span className="traveller-number">1</span>
+                    <strong>{booking?.name}</strong>
+                  </div>
+                )}
+
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* Price Section */}
+
+          <div className="ticket-price">
+
+            <span className="price-label">
+              TOTAL PAID
+            </span>
+
+            <div className="price">
+              ₹{grandTotal}
+            </div>
+
+            <div className="price-details">
+              <p>
+                Package
+                <strong>₹{packagePrice}</strong>
+              </p>
+
+              <p>
+                Travel Charge
+                <strong>₹{travelCharge}</strong>
+              </p>
+
+              <p>
+                Payment
+                <strong>{paymentMethod}</strong>
+              </p>
+            </div>
+
+            <div className="confirmed-box">
+              Booking Confirmed
+            </div>
+
+          </div>
+
+        </div>
+
+        {/* Footer */}
+
+        <div className="ticket-footer">
+          <span>DEAL NEST</span>
+          <span>Travel with confidence</span>
+          <span>{bookingId}</span>
         </div>
 
         <button
@@ -109,6 +236,7 @@ function PaymentSuccess() {
         </button>
 
       </div>
+
     </div>
   );
 }

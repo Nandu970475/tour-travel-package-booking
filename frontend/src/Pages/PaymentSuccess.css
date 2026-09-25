@@ -1,5 +1,5 @@
 /* =========================================
-   PAYMENT SUCCESS PAGE
+   PAYMENT SUCCESS / TICKET PAGE
 ========================================= */
 
 .success-page {
@@ -10,20 +10,23 @@
   justify-content: center;
   align-items: center;
 
+  padding: 45px 25px;
+  box-sizing: border-box;
+
   position: relative;
   overflow: hidden;
 
-  padding: 50px 20px;
-
-  box-sizing: border-box;
-
   background:
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(255, 255, 255, 0.65),
+      transparent 28%
+    ),
     linear-gradient(
       135deg,
-      #3b0717 0%,
-      #570b22 35%,
-      #6f1028 65%,
-      #3b0717 100%
+      #e5e3c9 0%,
+      #dddcc0 45%,
+      #d0cfb4 100%
     );
 
   font-family: Arial, Helvetica, sans-serif;
@@ -31,377 +34,613 @@
 
 
 /* =========================================
-   MOVING BACKGROUND LIGHT
+   DECORATIVE AIRPLANE
 ========================================= */
 
 .success-page::before {
-  content: "";
+  content: "✈";
 
   position: absolute;
 
-  width: 600px;
-  height: 600px;
+  top: 45px;
+  right: 55px;
 
-  border-radius: 50%;
+  font-size: 110px;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(255, 210, 150, 0.20) 0%,
-      rgba(255, 210, 150, 0.08) 35%,
-      transparent 70%
-    );
+  color: rgba(91, 89, 66, 0.16);
 
-  filter: blur(20px);
-
-  top: -250px;
-  left: -200px;
-
-  animation: burgundyLight 12s ease-in-out infinite alternate;
-}
-
-
-/* Second subtle light */
-
-.success-page::after {
-  content: "";
-
-  position: absolute;
-
-  width: 500px;
-  height: 500px;
-
-  border-radius: 50%;
-
-  background:
-    radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.10) 0%,
-      rgba(255, 255, 255, 0.03) 40%,
-      transparent 70%
-    );
-
-  filter: blur(25px);
-
-  bottom: -250px;
-  right: -180px;
-
-  animation: burgundyLightTwo 15s ease-in-out infinite alternate;
+  transform: rotate(18deg);
 }
 
 
 /* =========================================
-   BACKGROUND ANIMATION
+   TICKET WRAPPER
 ========================================= */
 
-@keyframes burgundyLight {
+.ticket-wrapper {
+  width: 100%;
+  max-width: 1180px;
 
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(250px, 180px);
-  }
-
-  100% {
-    transform: translate(500px, 50px);
-  }
-
-}
-
-
-@keyframes burgundyLightTwo {
-
-  0% {
-    transform: translate(0, 0);
-  }
-
-  50% {
-    transform: translate(-180px, -120px);
-  }
-
-  100% {
-    transform: translate(-350px, -40px);
-  }
-
-}
-
-
-/* =========================================
-   MAIN SUCCESS CARD
-========================================= */
-
-.success-card {
   position: relative;
+  z-index: 2;
+}
 
-  z-index: 5;
 
-  width: 900px;
-  max-width: 94vw;
+/* =========================================
+   HEADER
+========================================= */
 
-  background: #fffaf7;
+.ticket-header {
+  display: flex;
 
-  border-radius: 18px;
+  justify-content: space-between;
+  align-items: center;
 
-  padding: 40px 45px;
+  padding: 0 25px 18px;
+}
 
-  box-sizing: border-box;
+.ticket-label {
+  font-size: 13px;
 
-  color: #2d1b1f;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  color: #171717;
+}
+
+.ticket-header h1 {
+  margin: 6px 0 3px;
+
+  font-size: 30px;
+
+  color: #151515;
+
+  font-weight: 700;
+}
+
+.ticket-header p {
+  margin: 0;
+
+  color: #777763;
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   CONFIRMED STATUS
+========================================= */
+
+.ticket-status {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  background: rgba(255, 255, 255, 0.6);
+
+  padding: 10px 17px;
+
+  border-radius: 25px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  color: #333326;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #2d7652;
+}
+
+
+/* =========================================
+   MAIN TICKET
+========================================= */
+
+.travel-ticket {
+  display: grid;
+
+  grid-template-columns: 1fr 280px;
+
+  min-height: 490px;
+
+  background: #f8f7e8;
+
+  border-radius: 28px;
+
+  overflow: hidden;
 
   box-shadow:
-    0 25px 70px rgba(0, 0, 0, 0.40);
+    0 25px 60px rgba(70, 68, 42, 0.20);
 
-  border: 1px solid rgba(255, 255, 255, 0.7);
-
-  text-align: center;
-
-  animation: cardAppear 0.7s ease-out;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 
 /* =========================================
-   CARD APPEAR ANIMATION
+   MAIN LEFT AREA
 ========================================= */
 
-@keyframes cardAppear {
+.ticket-main {
+  padding: 38px 45px;
 
-  from {
-    opacity: 0;
-    transform: translateY(25px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-
+  border-right: 2px dashed #d5d3b9;
 }
 
 
 /* =========================================
-   SUCCESS ICON
+   PACKAGE TITLE
 ========================================= */
 
-.tick {
-  width: 72px;
-  height: 72px;
+.package-title span {
+  font-size: 11px;
 
-  margin: 0 auto 18px;
+  letter-spacing: 1.4px;
 
-  border-radius: 50%;
+  color: #858570;
 
-  background: #16834b;
+  font-weight: 700;
+}
 
-  color: white;
+.package-title h2 {
+  margin: 7px 0 28px;
+
+  font-size: 28px;
+
+  color: #151515;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   JOURNEY
+========================================= */
+
+.journey {
+  display: grid;
+
+  grid-template-columns: 1fr 150px 1fr;
+
+  align-items: center;
+
+  margin-bottom: 32px;
+}
+
+.journey-place span {
+  display: block;
+
+  font-size: 10px;
+
+  letter-spacing: 1px;
+
+  color: #858570;
+
+  margin-bottom: 7px;
+}
+
+.journey-place strong {
+  display: block;
+
+  font-size: 25px;
+
+  color: #151515;
+}
+
+.journey-place small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #858570;
+
+  font-size: 12px;
+}
+
+.destination {
+  text-align: right;
+}
+
+
+/* =========================================
+   AIRPLANE LINE
+========================================= */
+
+.flight-line {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+}
+
+.flight-line .line {
+  flex: 1;
+
+  height: 1px;
+
+  border-top: 1px dashed #a8a68d;
+}
+
+.plane {
+  width: 38px;
+  height: 38px;
 
   display: flex;
 
   justify-content: center;
   align-items: center;
-
-  font-size: 0;
-
-  box-shadow:
-    0 8px 25px rgba(22, 131, 75, 0.30);
-
-  animation: tickAppear 0.7s ease-out;
 }
 
+.plane svg {
+  width: 30px;
+  height: 30px;
 
-/* Create check mark without emoji */
+  fill: #333326;
 
-.tick::after {
-  content: "✓";
-
-  font-size: 42px;
-
-  font-weight: 700;
-
-  line-height: 1;
-
-  color: white;
-}
-
-
-@keyframes tickAppear {
-
-  0% {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-
-  70% {
-    transform: scale(1.08);
-  }
-
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
+  transform: rotate(90deg);
 }
 
 
 /* =========================================
-   MAIN HEADING
+   TICKET INFORMATION
 ========================================= */
 
-.success-card h1 {
-  margin: 0;
+.ticket-info {
+  display: grid;
 
-  color: #74152c;
+  grid-template-columns:
+    repeat(4, 1fr);
 
-  font-size: 32px;
+  gap: 20px;
 
-  font-weight: 800;
+  padding: 20px 0;
 
-  letter-spacing: -0.5px;
+  border-top: 1px solid #dedcc8;
+  border-bottom: 1px solid #dedcc8;
 }
 
+.ticket-info span,
+.price-label {
+  display: block;
 
-/* =========================================
-   THANK YOU TEXT
-========================================= */
+  font-size: 10px;
 
-.thankyou {
-  margin: 10px 0 28px;
+  letter-spacing: 1px;
 
-  color: #6b5b60;
+  color: #858570;
 
-  font-size: 15px;
+  margin-bottom: 7px;
 }
 
+.ticket-info strong {
+  display: block;
 
-/* =========================================
-   BOOKING CONFIRMATION BOX
-========================================= */
-
-.booking-box {
-  width: 100%;
-
-  box-sizing: border-box;
-
-  padding: 25px 28px;
-
-  margin-bottom: 25px;
-
-  background: #ffffff;
-
-  border-radius: 14px;
-
-  border: 1px solid #eadde0;
-
-  box-shadow:
-    0 8px 25px rgba(70, 15, 30, 0.08);
-
-  text-align: left;
-}
-
-
-/* =========================================
-   BOOKING TITLE
-========================================= */
-
-.booking-box h2 {
-  margin: 0 0 18px;
-
-  text-align: center;
-
-  color: #74152c;
-
-  font-size: 22px;
-
-  font-weight: 800;
-}
-
-
-/* =========================================
-   HORIZONTAL LINES
-========================================= */
-
-.booking-box hr {
-  border: none;
-
-  border-top: 1px solid #e3d6da;
-
-  margin: 16px 0;
-}
-
-
-/* =========================================
-   BOOKING DETAILS
-========================================= */
-
-.booking-box p {
-  margin: 9px 0;
+  color: #25251e;
 
   font-size: 14px;
-
-  color: #403238;
-
-  line-height: 1.5;
-}
-
-
-.booking-box p strong {
-  display: inline-block;
-
-  min-width: 145px;
-
-  color: #74152c;
-
-  font-weight: 700;
 }
 
 
 /* =========================================
-   PRICE DETAILS
+   TRAVELLER AREA
 ========================================= */
 
-.booking-box h3 {
+.traveller-area {
+  margin-top: 25px;
+}
+
+.traveller-heading {
   display: flex;
 
   justify-content: space-between;
 
   align-items: center;
+
+  margin-bottom: 12px;
+}
+
+.traveller-heading span {
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  color: #858570;
+}
+
+.traveller-heading small {
+  color: #858570;
+}
+
+.traveller-list {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+.traveller {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  background: #eeeddc;
+
+  padding: 8px 13px;
+
+  border-radius: 20px;
+}
+
+.traveller-number {
+  width: 22px;
+  height: 22px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #25251e;
+
+  color: white;
+
+  font-size: 11px;
+}
+
+.traveller strong {
+  font-size: 12px;
+
+  color: #35352b;
+}
+
+
+/* =========================================
+   PRICE SECTION
+========================================= */
+
+.ticket-price {
+  background: #eeeddc;
+
+  padding: 38px 30px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.price {
+  font-size: 38px;
+
+  font-weight: 700;
+
+  color: #151515;
+
+  margin-bottom: 30px;
+}
+
+.price-details {
+  border-top: 1px solid #d1d0b7;
+
+  padding-top: 18px;
+}
+
+.price-details p {
+  display: flex;
+
+  justify-content: space-between;
 
   gap: 15px;
 
-  margin: 10px 0;
+  margin: 12px 0;
 
-  font-size: 15px;
+  color: #777763;
 
-  color: #403238;
+  font-size: 13px;
+}
 
-  font-weight: 700;
+.price-details strong {
+  color: #27271f;
+
+  text-align: right;
 }
 
 
 /* =========================================
-   GRAND TOTAL
+   CONFIRMED BOX
 ========================================= */
 
-.booking-box h2[style] {
+.confirmed-box {
+  margin-top: 25px;
+
+  padding: 12px;
+
+  text-align: center;
+
+  border-radius: 8px;
+
+  background: #25251e;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.ticket-footer {
   display: flex;
 
   justify-content: space-between;
 
-  align-items: center;
+  padding: 16px 25px;
 
-  margin: 15px 0;
+  color: #777763;
 
-  padding: 15px 0;
+  font-size: 11px;
 
-  border-top: 2px solid #74152c;
+  letter-spacing: 0.5px;
+}
 
-  border-bottom: 2px solid #74152c;
+.ticket-footer span:first-child {
+  color: #22221d;
 
-  color: #74152c !important;
+  font-weight: 800;
 
-  font-size: 21px;
+  letter-spacing: 1px;
 }
 
 
-/*
+/* =========================================
+   HOME BUTTON
+========================================= */
+
+.home-btn {
+  display: block;
+
+  margin: 10px auto 0;
+
+  padding: 13px 30px;
+
+  border: none;
+
+  border-radius: 25px;
+
+  background: #171717;
+
+  color: white;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.home-btn:hover {
+  background: #3d3d36;
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 850px) {
+
+  .travel-ticket {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-main {
+    border-right: none;
+
+    border-bottom: 2px dashed #d5d3b9;
+  }
+
+  .ticket-price {
+    padding: 28px;
+  }
+
+  .ticket-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+  .success-page {
+    padding: 25px 12px;
+  }
+
+  .ticket-header {
+    padding: 0 10px 15px;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .ticket-header h1 {
+    font-size: 23px;
+  }
+
+  .ticket-status {
+    padding: 8px 11px;
+  }
+
+  .ticket-main {
+    padding: 25px 20px;
+  }
+
+  .package-title h2 {
+    font-size: 22px;
+  }
+
+  .journey {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .destination {
+    text-align: left;
+  }
+
+  .flight-line {
+    transform: rotate(90deg);
+
+    margin: 5px 0;
+  }
+
+  .ticket-info {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 15px;
+  }
+
+  .ticket-footer {
+    flex-direction: column;
+
+    gap: 7px;
+
+    text-align: center;
+  }
+
+  .success-page::before {
+    font-size: 70px;
+
+    right: 10px;
+  }
+}
